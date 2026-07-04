@@ -28,13 +28,33 @@
       z-index: 999;
       font-family: Arial;
     }
+
+    #start-screen{
+    position:fixed;
+    inset:0;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+    }
+
+    #start-btn{
+        padding:16px 28px;
+        font-size:20px;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;
+    }
   </style>
 </head>
 
 <body>
 
 <div id="msg">Point your camera at the image</div>
-
+<div id="start-screen">
+  <button id="start-btn">▶ Start AR Experience</button>
+</div>
 <a-scene
   mindar-image="imageTargetSrc: ./assets/targets.mind;"
   color-space="sRGB"
@@ -79,38 +99,52 @@
 
 <script>
 
-window.addEventListener("load", () => {
+const startScreen = document.getElementById("start-screen");
+const startBtn = document.getElementById("start-btn");
 
-    const target=document.querySelector("#target");
-    const video=document.querySelector("#video");
-    const plane=document.querySelector("#videoPlane");
-    const msg=document.querySelector("#msg");
+const video = document.getElementById("video");
+const target = document.getElementById("target");
+const plane = document.getElementById("videoPlane");
 
-    target.addEventListener("targetFound", async()=>{
+let started = false;
 
-        msg.style.display="none";
+startBtn.addEventListener("click", async () => {
 
-        plane.setAttribute("visible",true);
+    // Unlock audio
+    video.muted = false;
 
-        try{
-            video.currentTime=0;
-            await video.play();
-        }catch(e){
-            console.log(e);
-        }
-
-    });
-
-    target.addEventListener("targetLost",()=>{
-
-        msg.style.display="block";
-
+    try {
+        await video.play();
         video.pause();
-        video.currentTime=0;
+        video.currentTime = 0;
+    } catch (e) {
+        console.log(e);
+    }
 
-        plane.setAttribute("visible",false);
+    startScreen.style.display = "none";
+    started = true;
+});
 
-    });
+target.addEventListener("targetFound", async () => {
+
+    if (!started) return;
+
+    plane.setAttribute("visible", true);
+
+    try{
+        await video.play();
+    }catch(e){
+        console.log(e);
+    }
+
+});
+
+target.addEventListener("targetLost", () => {
+
+    video.pause();
+    video.currentTime = 0;
+
+    plane.setAttribute("visible", false);
 
 });
 
