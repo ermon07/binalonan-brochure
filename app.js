@@ -10,6 +10,28 @@ const videoPlane = document.getElementById("videoPlane");
 let started = false;
 
 // =========================
+// DESKTOP WARNING
+// =========================
+
+function isMobileDevice(){
+
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+}
+
+window.addEventListener("load", () => {
+
+    if(!isMobileDevice()){
+
+        document.getElementById("desktop-warning").style.display = "flex";
+
+        document.querySelector("a-scene").style.display = "none";
+
+    }
+
+});
+
+// =========================
 // Start Experience
 // =========================
 

@@ -339,3 +339,41 @@ a-scene{
     height:100%;
 
 }
+
+/* ==========================
+   DESKTOP WARNING
+========================== */
+
+#desktop-warning{
+    position:fixed;
+    inset:0;
+    background:#153C4B;
+    color:white;
+
+    display:none;
+    justify-content:center;
+    align-items:center;
+
+    z-index:10000;
+    text-align:center;
+    padding:20px;
+}
+
+#desktop-warning .box{
+    max-width:320px;
+    background:rgba(255,255,255,0.1);
+    padding:25px;
+    border-radius:16px;
+    backdrop-filter:blur(10px);
+}
+
+#desktop-warning h2{
+    margin-bottom:12px;
+    color:#9CCB3B;
+}
+
+#desktop-warning .small{
+    margin-top:10px;
+    font-size:13px;
+    opacity:0.8;
+}
