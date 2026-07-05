@@ -54,18 +54,20 @@ startBtn.addEventListener("click", async () => {
 target.addEventListener("targetFound", async () => {
 
     if(lostTimer){
-
         clearTimeout(lostTimer);
-
         lostTimer = null;
-
     }
 
-    modal.style.display="none";
+    modal.style.display = "none";
 
-    videoPlane.setAttribute("visible",true);
+    guide.style.display = "none";
 
-    await video.play();
+    try {
+        video.currentTime = 0;
+        await video.play();
+    } catch (e) {
+        console.log(e);
+    }
 
 });
 
@@ -79,7 +81,7 @@ target.addEventListener("targetLost", () => {
 
         modal.style.display = "flex";
 
-    },3000);
+    }, 3000);
 
 });
 
