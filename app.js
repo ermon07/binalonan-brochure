@@ -7,6 +7,12 @@ const video = document.getElementById("video");
 const target = document.getElementById("target");
 const videoPlane = document.getElementById("videoPlane");
 
+const modal = document.getElementById("trackingModal");
+const continueBtn = document.getElementById("continueBtn");
+const closeBtn = document.getElementById("closeBtn");
+
+let lostTimer = null;
+
 let started = false;
 
 // =========================
@@ -47,39 +53,19 @@ startBtn.addEventListener("click", async () => {
 
 target.addEventListener("targetFound", async () => {
 
-    if (!started) return;
+    if(lostTimer){
 
-    guide.style.display = "none";
+        clearTimeout(lostTimer);
 
-    videoPlane.setAttribute("visible", true);
-
-    // Fade in
-    videoPlane.setAttribute("animation__scale", {
-        property: "scale",
-        from: "0.7 0.7 0.7",
-        to: "1 1 1",
-        dur: 350,
-        easing: "easeOutBack"
-    });
-
-    videoPlane.setAttribute("animation__opacity", {
-        property: "material.opacity",
-        from: 0,
-        to: 1,
-        dur: 300
-    });
-
-    try {
-
-        video.currentTime = 0;
-
-        await video.play();
-
-    } catch (e) {
-
-        console.log(e);
+        lostTimer = null;
 
     }
+
+    modal.style.display="none";
+
+    videoPlane.setAttribute("visible",true);
+
+    await video.play();
 
 });
 
@@ -89,14 +75,51 @@ target.addEventListener("targetFound", async () => {
 
 target.addEventListener("targetLost", () => {
 
-    if (!started) return;
+    lostTimer = setTimeout(() => {
 
-    guide.style.display = "block";
+        modal.style.display = "flex";
+
+    },3000);
+
+});
+
+// =========================
+// CONTINUE BUTTON
+// =========================
+
+continueBtn.addEventListener("click",async()=>{
+
+    modal.style.display="none";
+
+    if(video.paused){
+
+        await video.play();
+
+    }
+
+    if(video.requestFullscreen){
+
+        video.requestFullscreen();
+
+    }
+    else if(video.webkitEnterFullscreen){
+
+        video.webkitEnterFullscreen();
+
+    }
+
+});
+
+// =========================
+// CLOSE BUTTON
+// =========================
+
+closeBtn.addEventListener("click",()=>{
+
+    modal.style.display="none";
 
     video.pause();
 
-    video.currentTime = 0;
-
-    videoPlane.setAttribute("visible", false);
+    video.currentTime=0;
 
 });
