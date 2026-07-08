@@ -5,153 +5,420 @@ const guide = document.getElementById("guide");
 
 const video = document.getElementById("video");
 const target = document.getElementById("target");
-const videoPlane = document.getElementById("videoPlane");
 
-let trackingTimeout = null;
-let trackingLost = false;
+const modal = document.getElementById("trackingModal");
+const continueBtn = document.getElementById("continueBtn");
+const closeBtn = document.getElementById("closeBtn");
+
+const replayCard = document.getElementById("replayCard");
+const replayBtn = document.getElementById("replayBtn");
+
+const fullscreenBtn = document.getElementById("fullscreenBtn");
+
 
 let started = false;
 
+let trackingLostTimer = null;
+
+let isTrackingLost = false;
+
+
+
 // =========================
-// DESKTOP WARNING
+// MOBILE CHECK
 // =========================
 
 function isMobileDevice(){
 
-    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    return /Android|iPhone|iPad|iPod/i.test(
+        navigator.userAgent
+    );
 
 }
 
-window.addEventListener("load", () => {
+
+window.addEventListener("load",()=>{
+
 
     if(!isMobileDevice()){
 
-        document.getElementById("desktop-warning").style.display = "flex";
+        const warning =
+        document.getElementById(
+            "desktop-warning"
+        );
 
-        document.querySelector("a-scene").style.display = "none";
+        if(warning){
 
-    }
+            warning.style.display="flex";
 
-});
-
-// =========================
-// Start Experience
-// =========================
-
-startBtn.addEventListener("click", async () => {
-
-    // Unlock audio
-    video.muted = false;
-
-    try {
-        await video.play();
-        video.pause();
-        video.currentTime = 0;
-    } catch (e) {
-        console.log(e);
-    }
-
-    startScreen.style.opacity = "0";
-    startScreen.style.transition = "0.5s ease";
-
-    setTimeout(() => {
-
-        startScreen.style.display = "none";
-
-        guide.style.display = "block";
-
-        started = true;
-
-    }, 500);
-
-});
-
-// =========================
-// Target Found
-// =========================
-
-target.addEventListener("targetFound", async () => {
-
-    // Tracking returned
-    trackingLost = false;
-
-    // Cancel the timeout
-    if (trackingTimeout) {
-        clearTimeout(trackingTimeout);
-        trackingTimeout = null;
-    }
-
-    // Hide modal if it was shown
-    modal.style.display = "none";
-
-    // Hide scan guide
-    guide.style.display = "none";
-
-    // Resume only if paused
-    if (video.paused) {
-        try {
-            await video.play();
-        } catch (e) {
-            console.log(e);
         }
+
+
+        const scene =
+        document.querySelector(
+            "a-scene"
+        );
+
+
+        if(scene){
+
+            scene.style.display="none";
+
+        }
+
     }
+
 
 });
 
+
+
+
 // =========================
-// Target Lost
+// START AR
 // =========================
 
-target.addEventListener("targetLost", () => {
 
-    trackingLost = true;
+startBtn.addEventListener(
+"click",
+async()=>{
 
-    // Give the tracker 5 seconds to recover
-    trackingTimeout = setTimeout(() => {
 
-        if (trackingLost) {
+    // unlock video
+
+    video.muted=false;
+
+
+    try{
+
+        await video.play();
+
+        video.pause();
+
+        video.currentTime=0;
+
+
+    }catch(e){
+
+        console.log(e);
+
+    }
+
+
+
+    startScreen.style.opacity="0";
+
+    startScreen.style.transition=
+    "0.5s ease";
+
+
+
+    setTimeout(()=>{
+
+
+        startScreen.style.display="none";
+
+
+        guide.style.display="block";
+
+
+        started=true;
+
+
+
+    },500);
+
+
+
+});
+
+
+
+
+
+// =========================
+// TARGET FOUND
+// =========================
+
+
+target.addEventListener(
+"targetFound",
+async()=>{
+
+
+    if(!started)
+    return;
+
+
+
+    console.log(
+        "Target Found"
+    );
+
+
+
+    isTrackingLost=false;
+
+
+
+    if(trackingLostTimer){
+
+        clearTimeout(
+            trackingLostTimer
+        );
+
+        trackingLostTimer=null;
+
+    }
+
+
+
+    modal.style.display="none";
+
+
+    guide.style.display="none";
+
+
+
+    // play only if paused
+
+    if(video.paused){
+
+
+        try{
+
+
+            await video.play();
+
+
+        }catch(e){
+
+
+            console.log(e);
+
+
+        }
+
+
+    }
+
+
+
+});
+
+
+
+
+
+
+
+// =========================
+// TARGET LOST
+// =========================
+
+
+target.addEventListener(
+"targetLost",
+()=>{
+
+
+    if(!started)
+    return;
+
+
+
+    console.log(
+        "Target Lost"
+    );
+
+
+
+    isTrackingLost=true;
+
+
+
+    trackingLostTimer =
+    setTimeout(()=>{
+
+
+        if(isTrackingLost){
+
 
             video.pause();
 
-            modal.style.display = "flex";
+
+            modal.style.display="flex";
+
 
         }
 
-    }, 5000);
+
+
+    },5000);
+
+
 
 });
 
+
+
+
+
+
+
+
 // =========================
-// Continue Button
+// CONTINUE WATCHING
 // =========================
 
 
-continueBtn.addEventListener("click", async () => {
+continueBtn.addEventListener(
+"click",
+async()=>{
 
-    modal.style.display = "none";
 
-    try {
+    modal.style.display="none";
+
+
+
+    try{
+
 
         await video.play();
 
-    } catch (e) {
+
+    }catch(e){
+
 
         console.log(e);
 
+
     }
+
+
 
 });
 
+
+
+
+
+
+
 // =========================
-// Close Button
+// CLOSE
 // =========================
 
-closeBtn.addEventListener("click", () => {
 
-    modal.style.display = "none";
+closeBtn.addEventListener(
+"click",
+()=>{
+
+
+    modal.style.display="none";
+
 
     video.pause();
 
-    video.currentTime = 0;
+
+    video.currentTime=0;
+
+
+
+});
+
+
+
+
+
+
+// =========================
+// VIDEO FINISHED
+// =========================
+
+
+video.addEventListener(
+"ended",
+()=>{
+
+
+    replayCard.style.display="block";
+
+
+});
+
+
+
+
+
+
+
+
+// =========================
+// REPLAY
+// =========================
+
+
+replayBtn.addEventListener(
+"click",
+async()=>{
+
+
+    replayCard.style.display="none";
+
+
+    video.currentTime=0;
+
+
+    try{
+
+
+        await video.play();
+
+
+    }catch(e){
+
+
+        console.log(e);
+
+
+    }
+
+
+});
+
+
+
+
+
+
+
+// =========================
+// FULLSCREEN
+// =========================
+
+
+fullscreenBtn.addEventListener(
+"click",
+()=>{
+
+
+    if(video.requestFullscreen){
+
+
+        video.requestFullscreen();
+
+
+    }
+
+    else if(video.webkitEnterFullscreen){
+
+
+        video.webkitEnterFullscreen();
+
+
+    }
+
+
 
 });
