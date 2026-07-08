@@ -793,3 +793,7 @@ a-scene{
 
 
 }
+
+#fullscreenBtn{
+    display:none;
+}

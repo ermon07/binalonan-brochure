@@ -145,6 +145,7 @@ target.addEventListener(
 "targetFound",
 async()=>{
 
+    fullscreenBtn.style.display="block";
 
     if(!started)
     return;
@@ -221,6 +222,8 @@ target.addEventListener(
 "targetLost",
 ()=>{
 
+
+    fullscreenBtn.style.display="none";
 
     if(!started)
     return;
