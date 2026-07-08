@@ -377,3 +377,419 @@ a-scene{
     font-size:13px;
     opacity:0.8;
 }
+
+/* ==========================
+   TRACKING LOST MODAL
+========================== */
+
+.tracking-modal{
+
+    position:fixed;
+
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+
+    align-items:center;
+
+    background:rgba(0,0,0,.55);
+
+    backdrop-filter:blur(8px);
+
+    z-index:9999;
+
+}
+
+
+.tracking-card{
+
+    width:330px;
+
+    max-width:90%;
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:30px;
+
+    text-align:center;
+
+    box-shadow:
+    0 20px 60px rgba(0,0,0,.35);
+
+    animation:popup .35s ease;
+
+}
+
+
+.tracking-card h2{
+
+    color:#153C4B;
+
+    font-size:26px;
+
+    margin-bottom:12px;
+
+}
+
+
+.tracking-card p{
+
+    color:#666;
+
+    line-height:1.6;
+
+    margin-bottom:25px;
+
+}
+
+
+
+/* ==========================
+   MODAL BUTTONS
+========================== */
+
+
+.modal-buttons{
+
+    display:flex;
+
+    gap:12px;
+
+}
+
+
+
+.modal-buttons button{
+
+    flex:1;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    transition:.3s;
+
+}
+
+
+
+#continueBtn{
+
+    background:
+    linear-gradient(
+        135deg,
+        #008C95,
+        #45C3A7
+    );
+
+    color:white;
+
+}
+
+
+
+#continueBtn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 10px 25px rgba(0,140,149,.35);
+
+}
+
+
+
+#closeBtn{
+
+    background:#eeeeee;
+
+    color:#555;
+
+}
+
+
+
+#closeBtn:hover{
+
+    background:#ddd;
+
+}
+
+
+
+
+/* ==========================
+   REPLAY CARD
+========================== */
+
+
+#replayCard{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:35px;
+
+    transform:translateX(-50%);
+
+
+    width:330px;
+
+    max-width:90%;
+
+
+    background:white;
+
+
+    border-radius:22px;
+
+
+    padding:25px;
+
+
+    text-align:center;
+
+
+    z-index:9998;
+
+
+    box-shadow:
+
+    0 20px 50px rgba(0,0,0,.3);
+
+
+    animation:popup .4s ease;
+
+}
+
+
+
+#replayCard h2{
+
+    color:#153C4B;
+
+    font-size:22px;
+
+    margin-bottom:18px;
+
+}
+
+
+
+#replayBtn{
+
+
+    width:100%;
+
+
+    padding:15px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    background:
+
+    linear-gradient(
+        90deg,
+        #9CCB3B,
+        #7FD24B
+    );
+
+
+    color:#153C4B;
+
+
+    font-size:17px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    transition:.3s;
+
+}
+
+
+
+#replayBtn:hover{
+
+
+    transform:translateY(-3px);
+
+
+    box-shadow:
+
+    0 10px 25px rgba(156,203,59,.4);
+
+
+}
+
+
+
+
+/* ==========================
+   FULLSCREEN BUTTON
+========================== */
+
+
+#fullscreenBtn{
+
+
+    position:fixed;
+
+
+    right:20px;
+
+
+    bottom:25px;
+
+
+    z-index:9997;
+
+
+    padding:14px 20px;
+
+
+    border:none;
+
+
+    border-radius:16px;
+
+
+    background:
+
+    rgba(255,255,255,.95);
+
+
+    color:#153C4B;
+
+
+    font-size:16px;
+
+
+    font-weight:700;
+
+
+    cursor:pointer;
+
+
+    box-shadow:
+
+    0 10px 30px rgba(0,0,0,.25);
+
+
+    transition:.3s;
+
+
+}
+
+
+
+#fullscreenBtn:hover{
+
+
+    transform:translateY(-3px);
+
+
+}
+
+
+
+
+/* ==========================
+   ANIMATION
+========================== */
+
+
+@keyframes popup{
+
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(30px)
+        scale(.95);
+
+    }
+
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0)
+        scale(1);
+
+    }
+
+
+}
+
+
+
+
+
+/* ==========================
+   MOBILE ADJUSTMENT
+========================== */
+
+
+@media(max-width:480px){
+
+
+    .tracking-card{
+
+        width:300px;
+
+        padding:25px;
+
+    }
+
+
+
+    #replayCard{
+
+        bottom:25px;
+
+    }
+
+
+
+    #fullscreenBtn{
+
+
+        right:15px;
+
+        bottom:20px;
+
+        padding:12px 16px;
+
+        font-size:14px;
+
+    }
+
+
+}
