@@ -1,26 +1,71 @@
-const startScreen = document.getElementById("start-screen");
-const startBtn = document.getElementById("start-btn");
+// =========================
+// ELEMENTS
+// =========================
 
-const guide = document.getElementById("guide");
 
-const video = document.getElementById("video");
-const target = document.getElementById("target");
+const startScreen =
+document.getElementById("start-screen");
 
-const modal = document.getElementById("trackingModal");
-const continueBtn = document.getElementById("continueBtn");
-const closeBtn = document.getElementById("closeBtn");
 
-const replayCard = document.getElementById("replayCard");
-const replayBtn = document.getElementById("replayBtn");
+const startBtn =
+document.getElementById("start-btn");
 
-const fullscreenBtn = document.getElementById("fullscreenBtn");
+
+const guide =
+document.getElementById("guide");
+
+
+const video =
+document.getElementById("video");
+
+
+const target =
+document.getElementById("target");
+
+
+const videoPlane =
+document.getElementById("videoPlane");
+
+
+
+const modal =
+document.getElementById("trackingModal");
+
+
+const continueBtn =
+document.getElementById("continueBtn");
+
+
+const closeBtn =
+document.getElementById("closeBtn");
+
+
+
+const replayCard =
+document.getElementById("replayCard");
+
+
+const replayBtn =
+document.getElementById("replayBtn");
+
+
+
+
+
+// =========================
+// VARIABLES
+// =========================
 
 
 let started = false;
 
-let trackingLostTimer = null;
 
-let isTrackingLost = false;
+let lostTimer = null;
+
+
+let targetLost = false;
+
+
 
 
 
@@ -28,30 +73,38 @@ let isTrackingLost = false;
 // MOBILE CHECK
 // =========================
 
-function isMobileDevice(){
 
-    return /Android|iPhone|iPad|iPod/i.test(
-        navigator.userAgent
-    );
+function isMobile(){
+
+
+    return /Android|iPhone|iPad|iPod/i
+    .test(navigator.userAgent);
+
 
 }
 
 
-window.addEventListener("load",()=>{
+
+window.addEventListener(
+"load",
+()=>{
 
 
-    if(!isMobileDevice()){
+    if(!isMobile()){
+
 
         const warning =
         document.getElementById(
             "desktop-warning"
         );
 
+
         if(warning){
 
             warning.style.display="flex";
 
         }
+
 
 
         const scene =
@@ -66,7 +119,9 @@ window.addEventListener("load",()=>{
 
         }
 
+
     }
+
 
 
 });
@@ -74,8 +129,11 @@ window.addEventListener("load",()=>{
 
 
 
+
+
+
 // =========================
-// START AR
+// START EXPERIENCE
 // =========================
 
 
@@ -84,33 +142,11 @@ startBtn.addEventListener(
 async()=>{
 
 
-    // unlock video
-
-    video.muted=false;
-
-
-    try{
-
-        await video.play();
-
-        video.pause();
-
-        video.currentTime=0;
-
-
-    }catch(e){
-
-        console.log(e);
-
-    }
+    started=true;
 
 
 
     startScreen.style.opacity="0";
-
-    startScreen.style.transition=
-    "0.5s ease";
-
 
 
     setTimeout(()=>{
@@ -122,15 +158,42 @@ async()=>{
         guide.style.display="block";
 
 
-        started=true;
-
-
-
     },500);
 
 
 
+    // unlock video permission
+
+    try{
+
+
+        video.muted=false;
+
+
+        await video.play();
+
+
+        video.pause();
+
+
+        video.currentTime=0;
+
+
+
+    }
+
+    catch(error){
+
+
+        console.log(error);
+
+
+    }
+
+
 });
+
+
 
 
 
@@ -145,7 +208,6 @@ target.addEventListener(
 "targetFound",
 async()=>{
 
-    fullscreenBtn.style.display="block";
 
     if(!started)
     return;
@@ -153,24 +215,26 @@ async()=>{
 
 
     console.log(
-        "Target Found"
+        "TARGET FOUND"
     );
 
 
 
-    isTrackingLost=false;
+    targetLost=false;
 
 
 
-    if(trackingLostTimer){
+    if(lostTimer){
 
-        clearTimeout(
-            trackingLostTimer
-        );
 
-        trackingLostTimer=null;
+        clearTimeout(lostTimer);
+
+
+        lostTimer=null;
+
 
     }
+
 
 
 
@@ -181,7 +245,19 @@ async()=>{
 
 
 
-    // play only if paused
+
+    // Show video plane
+
+
+    videoPlane.setAttribute(
+        "visible",
+        true
+    );
+
+
+
+    // Resume video
+
 
     if(video.paused){
 
@@ -192,10 +268,13 @@ async()=>{
             await video.play();
 
 
-        }catch(e){
+        }
 
 
-            console.log(e);
+        catch(error){
+
+
+            console.log(error);
 
 
         }
@@ -206,6 +285,8 @@ async()=>{
 
 
 });
+
+
 
 
 
@@ -223,28 +304,27 @@ target.addEventListener(
 ()=>{
 
 
-    fullscreenBtn.style.display="none";
-
     if(!started)
     return;
 
 
 
     console.log(
-        "Target Lost"
+        "TARGET LOST"
     );
 
 
 
-    isTrackingLost=true;
+    targetLost=true;
 
 
 
-    trackingLostTimer =
-    setTimeout(()=>{
+
+    lostTimer=setTimeout(
+    ()=>{
 
 
-        if(isTrackingLost){
+        if(targetLost){
 
 
             video.pause();
@@ -257,7 +337,9 @@ target.addEventListener(
 
 
 
-    },5000);
+    },
+    5000
+    );
 
 
 
@@ -290,17 +372,20 @@ async()=>{
         await video.play();
 
 
-    }catch(e){
+    }
 
 
-        console.log(e);
+    catch(error){
+
+
+        console.log(error);
 
 
     }
 
 
-
 });
+
 
 
 
@@ -321,14 +406,24 @@ closeBtn.addEventListener(
     modal.style.display="none";
 
 
+
     video.pause();
+
 
 
     video.currentTime=0;
 
 
 
+    videoPlane.setAttribute(
+        "visible",
+        false
+    );
+
+
 });
+
+
 
 
 
@@ -370,7 +465,9 @@ async()=>{
     replayCard.style.display="none";
 
 
+
     video.currentTime=0;
+
 
 
     try{
@@ -379,55 +476,18 @@ async()=>{
         await video.play();
 
 
-    }catch(e){
+
+    }
 
 
-        console.log(e);
+    catch(error){
+
+
+        console.log(error);
 
 
     }
 
 
-});
-
-
-
-
-
-
-
-// =========================
-// FULLSCREEN
-// =========================
-
-
-fullscreenBtn.addEventListener(
-"click",
-()=>{
-
-
-    if(video.requestFullscreen){
-
-
-        video.requestFullscreen();
-
-
-    }
-
-    else if(video.webkitEnterFullscreen){
-
-
-        video.webkitEnterFullscreen();
-
-
-    }
-
-
-
-});
-
-video.addEventListener("ended",()=>{
-
-    replayCard.style.display="block";
 
 });
