@@ -7,8 +7,8 @@ const video = document.getElementById("video");
 const target = document.getElementById("target");
 const videoPlane = document.getElementById("videoPlane");
 
-const replayCard = document.getElementById("replayCard");
-const replayBtn = document.getElementById("replayBtn");
+let trackingTimeout = null;
+let trackingLost = false;
 
 let started = false;
 
@@ -72,45 +72,65 @@ startBtn.addEventListener("click", async () => {
 
 target.addEventListener("targetFound", async () => {
 
-    if (!started) return;
+    // Tracking returned
+    trackingLost = false;
 
-    videoPlane.setAttribute("animation__fade",{
+    // Cancel the timeout
+    if (trackingTimeout) {
+        clearTimeout(trackingTimeout);
+        trackingTimeout = null;
+    }
 
-    property:"material.opacity",
+    // Hide modal if it was shown
+    modal.style.display = "none";
 
-    from:0,
+    // Hide scan guide
+    guide.style.display = "none";
 
-    to:1,
-
-    dur:350
+    // Resume only if paused
+    if (video.paused) {
+        try {
+            await video.play();
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 });
 
-    guide.style.display = "none";
+// =========================
+// Target Lost
+// =========================
 
-    videoPlane.setAttribute("visible", true);
+target.addEventListener("targetLost", () => {
 
-    // Fade in
-    videoPlane.setAttribute("animation__scale", {
-        property: "scale",
-        from: "0.7 0.7 0.7",
-        to: "1 1 1",
-        dur: 350,
-        easing: "easeOutBack"
-    });
+    trackingLost = true;
 
-    videoPlane.setAttribute("animation__opacity", {
-        property: "material.opacity",
-        from: 0,
-        to: 1,
-        dur: 300
-    });
+    // Give the tracker 5 seconds to recover
+    trackingTimeout = setTimeout(() => {
 
-    
+        if (trackingLost) {
+
+            video.pause();
+
+            modal.style.display = "flex";
+
+        }
+
+    }, 5000);
+
+});
+
+// =========================
+// Continue Button
+// =========================
+
+
+continueBtn.addEventListener("click", async () => {
+
+    modal.style.display = "none";
 
     try {
-
-        video.currentTime = 0;
 
         await video.play();
 
@@ -123,45 +143,15 @@ target.addEventListener("targetFound", async () => {
 });
 
 // =========================
-// Target Lost
+// Close Button
 // =========================
 
-target.addEventListener("targetLost", () => {
+closeBtn.addEventListener("click", () => {
 
-    if (!started) return;
-
-    guide.style.display = "block";
+    modal.style.display = "none";
 
     video.pause();
 
     video.currentTime = 0;
-
-    videoPlane.setAttribute("visible", false);
-
-    replayCard.style.display="none";
-
-});
-
-// =========================
-// Finished Playing
-// =========================
-
-video.addEventListener("ended",()=>{
-
-    replayCard.style.display="block";
-
-});
-
-// =========================
-// Replay Button
-// =========================
-
-replayBtn.addEventListener("click",async()=>{
-
-    replayCard.style.display="none";
-
-    video.currentTime=0;
-
-    await video.play();
 
 });
