@@ -7,6 +7,9 @@ const video = document.getElementById("video");
 const target = document.getElementById("target");
 const videoPlane = document.getElementById("videoPlane");
 
+const replayCard = document.getElementById("replayCard");
+const replayBtn = document.getElementById("replayBtn");
+
 let started = false;
 
 // =========================
@@ -71,6 +74,18 @@ target.addEventListener("targetFound", async () => {
 
     if (!started) return;
 
+    videoPlane.setAttribute("animation__fade",{
+
+    property:"material.opacity",
+
+    from:0,
+
+    to:1,
+
+    dur:350
+
+});
+
     guide.style.display = "none";
 
     videoPlane.setAttribute("visible", true);
@@ -90,6 +105,8 @@ target.addEventListener("targetFound", async () => {
         to: 1,
         dur: 300
     });
+
+    
 
     try {
 
@@ -120,5 +137,31 @@ target.addEventListener("targetLost", () => {
     video.currentTime = 0;
 
     videoPlane.setAttribute("visible", false);
+
+    replayCard.style.display="none";
+
+});
+
+// =========================
+// Finished Playing
+// =========================
+
+video.addEventListener("ended",()=>{
+
+    replayCard.style.display="block";
+
+});
+
+// =========================
+// Replay Button
+// =========================
+
+replayBtn.addEventListener("click",async()=>{
+
+    replayCard.style.display="none";
+
+    video.currentTime=0;
+
+    await video.play();
 
 });
