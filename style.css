@@ -573,6 +573,8 @@ a-scene{
 
     animation:popup .4s ease;
 
+    display:none;
+
 }
 
 
@@ -797,3 +799,4 @@ a-scene{
 #fullscreenBtn{
     display:none;
 }
+

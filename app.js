@@ -425,3 +425,9 @@ fullscreenBtn.addEventListener(
 
 
 });
+
+video.addEventListener("ended",()=>{
+
+    replayCard.style.display="block";
+
+});
