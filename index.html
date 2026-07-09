@@ -1,410 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<head>
+        <title>Binalonan AR</title>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css" />
 
-<title>Binalonan AR</title>
+        <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-<link rel="stylesheet" href="style.css">
+        <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    </head>
 
-
-<script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-
-<script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
-
-</head>
-
-
-<body>
-
-
-<!-- =========================
+    <body>
+        <!-- =========================
 DESKTOP WARNING
 ========================= -->
 
-<div id="desktop-warning">
+        <div id="desktop-warning">
+            <div class="box">
+                <h2>📱 Mobile Only Experience</h2>
 
-<div class="box">
+                <p>Please open this AR experience using a smartphone.</p>
 
-<h2>📱 Mobile Only Experience</h2>
+                <p class="small">Camera AR is not supported on desktop.</p>
+            </div>
+        </div>
 
-<p>
-Please open this AR experience
-using a smartphone.
-</p>
-
-<p class="small">
-Camera AR is not supported on desktop.
-</p>
-
-</div>
-
-</div>
-
-
-
-
-
-<!-- =========================
+        <!-- =========================
 WELCOME SCREEN
 ========================= -->
 
+        <div id="start-screen">
+            <div class="card">
+                <img src="assets/logo.png" class="logo" />
 
-<div id="start-screen">
+                <h1>Binalonan AR</h1>
 
+                <p class="subtitle">Discover. Experience. Remember.</p>
 
-<div class="card">
+                <p class="description">
+                    Bring the tourism brochure to life. Scan the image and
+                    experience Binalonan through AR.
+                </p>
 
+                <div class="features">
+                    <div class="feature">
+                        <div class="icon">📷</div>
 
-<img src="assets/logo.png" class="logo">
+                        <div>
+                            <h3>Scan</h3>
 
+                            <span> Point your camera </span>
+                        </div>
+                    </div>
 
-<h1>
-Binalonan AR
-</h1>
+                    <div class="feature">
+                        <div class="icon">🎬</div>
 
+                        <div>
+                            <h3>Watch</h3>
 
-<p class="subtitle">
-Discover. Experience. Remember.
-</p>
+                            <span> Experience the story </span>
+                        </div>
+                    </div>
 
+                    <div class="feature">
+                        <div class="icon">📍</div>
 
-<p class="description">
+                        <div>
+                            <h3>Explore</h3>
 
-Bring the tourism brochure to life.
-Scan the image and experience
-Binalonan through AR.
+                            <span> Discover destinations </span>
+                        </div>
+                    </div>
+                </div>
 
-</p>
+                <button id="start-btn">▶ Start AR Experience</button>
+            </div>
+        </div>
 
-
-
-<div class="features">
-
-
-<div class="feature">
-
-<div class="icon">
-📷
-</div>
-
-<div>
-
-<h3>
-Scan
-</h3>
-
-<span>
-Point your camera
-</span>
-
-</div>
-
-</div>
-
-
-
-<div class="feature">
-
-<div class="icon">
-🎬
-</div>
-
-<div>
-
-<h3>
-Watch
-</h3>
-
-<span>
-Experience the story
-</span>
-
-</div>
-
-</div>
-
-
-
-<div class="feature">
-
-<div class="icon">
-📍
-</div>
-
-<div>
-
-<h3>
-Explore
-</h3>
-
-<span>
-Discover destinations
-</span>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-
-
-<button id="start-btn">
-
-▶ Start AR Experience
-
-</button>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-<!-- =========================
+        <!-- =========================
 SCAN GUIDE
 ========================= -->
 
+        <div id="guide">
+            <div class="scan-box"></div>
 
-<div id="guide">
+            <p>Point camera at the brochure</p>
+        </div>
 
-
-<div class="scan-box"></div>
-
-
-<p>
-Point camera at the brochure
-</p>
-
-
-</div>
-
-
-
-
-
-
-<!-- =========================
+        <!-- =========================
 TRACKING LOST
 ========================= -->
 
+        <div id="trackingModal">
+            <div class="tracking-card">
+                <h2>Tracking Lost</h2>
 
-<div id="trackingModal">
+                <p>The brochure is no longer visible. Continue watching?</p>
 
+                <div class="modal-buttons">
+                    <button id="continueBtn">Continue</button>
 
-<div class="tracking-card">
+                    <button id="closeBtn">Close</button>
+                </div>
+            </div>
+        </div>
 
-
-<h2>
-Tracking Lost
-</h2>
-
-
-<p>
-The brochure is no longer visible.
-Continue watching?
-</p>
-
-
-<div class="modal-buttons">
-
-
-<button id="continueBtn">
-
-Continue
-
-</button>
-
-
-<button id="closeBtn">
-
-Close
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-<!-- =========================
+        <!-- =========================
 VIDEO FINISHED
 ========================= -->
 
+        <div id="replayCard">
+            <h2>Thanks for watching!</h2>
 
-<div id="replayCard">
+            <p>Explore more destinations in Binalonan.</p>
 
+            <button id="replayBtn">↻ Replay Video</button>
+        </div>
 
-<h2>
-Thanks for watching!
-</h2>
-
-
-<p>
-Explore more destinations in Binalonan.
-</p>
-
-
-<button id="replayBtn">
-
-↻ Replay Video
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-<!-- =========================
+        <!-- =========================
 AR
 ========================= -->
 
-
-<a-scene
-
-
-mindar-image="
+        <a-scene
+            mindar-image="
 imageTargetSrc: assets/targets.mind;
 filterMinCF:0.001;
 filterBeta:0.01;
 "
-
-
-color-space="sRGB"
-
-
-renderer="
+            color-space="sRGB"
+            renderer="
 colorManagement:true;
 "
-
-
-vr-mode-ui="
+            vr-mode-ui="
 enabled:false;
 "
-
-
-device-orientation-permission-ui="
+            device-orientation-permission-ui="
 enabled:true;
 "
+        >
+            <a-assets>
+                <video
+                    id="video"
+                    src="assets/promo.mp4"
+                    preload="auto"
+                    playsinline
+                    webkit-playsinline
+                    crossorigin="anonymous"
+                ></video>
+            </a-assets>
 
->
+            <a-camera position="0 0 0" look-controls="enabled:false">
+            </a-camera>
 
-
-
-
-
-<a-assets>
-
-
-<video
-
-id="video"
-
-src="assets/promo.mp4"
-
-preload="auto"
-
-playsinline
-
-webkit-playsinline
-
-crossorigin="anonymous">
-
-</video>
-
-
-</a-assets>
-
-
-
-
-
-
-<a-camera
-
-position="0 0 0"
-
-look-controls="enabled:false">
-
-</a-camera>
-
-
-
-
-
-
-
-<a-entity
-
-id="target"
-
-mindar-image-target="targetIndex:0">
-
-
-<a-video
-
-id="videoPlane"
-
-src="#video"
-
-width="1"
-
-height="0.5625"
-
-position="0 0 0.01"
-
-material="
+            <a-entity id="target" mindar-image-target="targetIndex:0">
+                <a-video
+                    id="videoPlane"
+                    src="#video"
+                    width="1"
+                    height="0.5625"
+                    position="0 0 0.01"
+                    material="
 shader:flat;
 transparent:true;
 opacity:1;
-">
+"
+                >
+                </a-video>
+            </a-entity>
+        </a-scene>
 
-</a-video>
-
-
-</a-entity>
-
-
-
-
-
-
-</a-scene>
-
-
-
-
-
-<script src="app.js"></script>
-
-
-</body>
-
+        <script src="app.js"></script>
+    </body>
 </html>

@@ -2,492 +2,196 @@
 // ELEMENTS
 // =========================
 
+const startScreen = document.getElementById("start-screen");
 
-const startScreen =
-document.getElementById("start-screen");
+const startBtn = document.getElementById("start-btn");
 
+const guide = document.getElementById("guide");
 
-const startBtn =
-document.getElementById("start-btn");
+const video = document.getElementById("video");
 
+const target = document.getElementById("target");
 
-const guide =
-document.getElementById("guide");
+const videoPlane = document.getElementById("videoPlane");
 
+const modal = document.getElementById("trackingModal");
 
-const video =
-document.getElementById("video");
+const continueBtn = document.getElementById("continueBtn");
 
+const closeBtn = document.getElementById("closeBtn");
 
-const target =
-document.getElementById("target");
+const replayCard = document.getElementById("replayCard");
 
-
-const videoPlane =
-document.getElementById("videoPlane");
-
-
-
-const modal =
-document.getElementById("trackingModal");
-
-
-const continueBtn =
-document.getElementById("continueBtn");
-
-
-const closeBtn =
-document.getElementById("closeBtn");
-
-
-
-const replayCard =
-document.getElementById("replayCard");
-
-
-const replayBtn =
-document.getElementById("replayBtn");
-
-
-
-
+const replayBtn = document.getElementById("replayBtn");
 
 // =========================
 // VARIABLES
 // =========================
 
-
 let started = false;
-
 
 let lostTimer = null;
 
-
 let targetLost = false;
-
-
-
-
 
 // =========================
 // MOBILE CHECK
 // =========================
 
-
-function isMobile(){
-
-
-    return /Android|iPhone|iPad|iPod/i
-    .test(navigator.userAgent);
-
-
+function isMobile() {
+    return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 }
 
+window.addEventListener("load", () => {
+    if (!isMobile()) {
+        const warning = document.getElementById("desktop-warning");
 
-
-window.addEventListener(
-"load",
-()=>{
-
-
-    if(!isMobile()){
-
-
-        const warning =
-        document.getElementById(
-            "desktop-warning"
-        );
-
-
-        if(warning){
-
-            warning.style.display="flex";
-
+        if (warning) {
+            warning.style.display = "flex";
         }
 
+        const scene = document.querySelector("a-scene");
 
-
-        const scene =
-        document.querySelector(
-            "a-scene"
-        );
-
-
-        if(scene){
-
-            scene.style.display="none";
-
+        if (scene) {
+            scene.style.display = "none";
         }
-
-
     }
-
-
-
 });
-
-
-
-
-
-
 
 // =========================
 // START EXPERIENCE
 // =========================
 
+startBtn.addEventListener("click", async () => {
+    started = true;
 
-startBtn.addEventListener(
-"click",
-async()=>{
+    startScreen.style.opacity = "0";
 
+    setTimeout(() => {
+        startScreen.style.display = "none";
 
-    started=true;
-
-
-
-    startScreen.style.opacity="0";
-
-
-    setTimeout(()=>{
-
-
-        startScreen.style.display="none";
-
-
-        guide.style.display="block";
-
-
-    },500);
-
-
+        guide.style.display = "block";
+    }, 500);
 
     // unlock video permission
 
-    try{
-
-
-        video.muted=false;
-
+    try {
+        video.muted = false;
 
         await video.play();
 
-
         video.pause();
 
-
-        video.currentTime=0;
-
-
-
-    }
-
-    catch(error){
-
-
+        video.currentTime = 0;
+    } catch (error) {
         console.log(error);
-
-
     }
-
-
 });
-
-
-
-
-
-
 
 // =========================
 // TARGET FOUND
 // =========================
 
+target.addEventListener("targetFound", async () => {
+    if (!started) return;
 
-target.addEventListener(
-"targetFound",
-async()=>{
+    console.log("TARGET FOUND");
 
+    targetLost = false;
 
-    if(!started)
-    return;
-
-
-
-    console.log(
-        "TARGET FOUND"
-    );
-
-
-
-    targetLost=false;
-
-
-
-    if(lostTimer){
-
-
+    if (lostTimer) {
         clearTimeout(lostTimer);
 
-
-        lostTimer=null;
-
-
+        lostTimer = null;
     }
 
+    modal.style.display = "none";
 
-
-
-    modal.style.display="none";
-
-
-    guide.style.display="none";
-
-
-
+    guide.style.display = "none";
 
     // Show video plane
 
-
-    videoPlane.setAttribute(
-        "visible",
-        true
-    );
-
-
+    videoPlane.setAttribute("visible", true);
 
     // Resume video
 
-
-    if(video.paused){
-
-
-        try{
-
-
+    if (video.paused) {
+        try {
             await video.play();
-
-
-        }
-
-
-        catch(error){
-
-
+        } catch (error) {
             console.log(error);
-
-
         }
-
-
     }
-
-
-
 });
-
-
-
-
-
-
-
-
 
 // =========================
 // TARGET LOST
 // =========================
 
+target.addEventListener("targetLost", () => {
+    if (!started) return;
 
-target.addEventListener(
-"targetLost",
-()=>{
+    console.log("TARGET LOST");
 
+    targetLost = true;
 
-    if(!started)
-    return;
-
-
-
-    console.log(
-        "TARGET LOST"
-    );
-
-
-
-    targetLost=true;
-
-
-
-
-    lostTimer=setTimeout(
-    ()=>{
-
-
-        if(targetLost){
-
-
+    lostTimer = setTimeout(() => {
+        if (targetLost) {
             video.pause();
 
-
-            modal.style.display="flex";
-
-
+            modal.style.display = "flex";
         }
-
-
-
-    },
-    5000
-    );
-
-
-
+    }, 5000);
 });
-
-
-
-
-
-
-
 
 // =========================
 // CONTINUE WATCHING
 // =========================
 
+continueBtn.addEventListener("click", async () => {
+    modal.style.display = "none";
 
-continueBtn.addEventListener(
-"click",
-async()=>{
-
-
-    modal.style.display="none";
-
-
-
-    try{
-
-
+    try {
         await video.play();
-
-
-    }
-
-
-    catch(error){
-
-
+    } catch (error) {
         console.log(error);
-
-
     }
-
-
 });
-
-
-
-
-
-
-
 
 // =========================
 // CLOSE
 // =========================
 
-
-closeBtn.addEventListener(
-"click",
-()=>{
-
-
-    modal.style.display="none";
-
-
+closeBtn.addEventListener("click", () => {
+    modal.style.display = "none";
 
     video.pause();
 
+    video.currentTime = 0;
 
-
-    video.currentTime=0;
-
-
-
-    videoPlane.setAttribute(
-        "visible",
-        false
-    );
-
-
+    videoPlane.setAttribute("visible", false);
 });
-
-
-
-
-
-
-
 
 // =========================
 // VIDEO FINISHED
 // =========================
 
-
-video.addEventListener(
-"ended",
-()=>{
-
-
-    replayCard.style.display="block";
-
-
+video.addEventListener("ended", () => {
+    replayCard.style.display = "block";
 });
-
-
-
-
-
-
-
 
 // =========================
 // REPLAY
 // =========================
 
+replayBtn.addEventListener("click", async () => {
+    replayCard.style.display = "none";
 
-replayBtn.addEventListener(
-"click",
-async()=>{
+    video.currentTime = 0;
 
-
-    replayCard.style.display="none";
-
-
-
-    video.currentTime=0;
-
-
-
-    try{
-
-
+    try {
         await video.play();
-
-
-
-    }
-
-
-    catch(error){
-
-
+    } catch (error) {
         console.log(error);
-
-
     }
-
-
-
 });
