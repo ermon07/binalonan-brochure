@@ -9,6 +9,9 @@ const startBtn = document.getElementById("start-btn");
 const guide = document.getElementById("guide");
 
 const video = document.getElementById("video");
+const video1 = document.getElementById("video");
+const video2 = document.getElementById("video");
+const video3 = document.getElementById("video");
 
 const target = document.getElementById("target");
 
@@ -77,12 +80,24 @@ startBtn.addEventListener("click", async () => {
 
     try {
         video.muted = false;
+        video1.muted = false;
+        video2.muted = false;
+        video3.muted = false;
 
         await video.play();
+        await video1.play();
+        await video2.play();
+        await video3.play();
 
         video.pause();
+        video1.pause();
+        video2.pause();
+        video3.pause();
 
         video.currentTime = 0;
+        video1.currentTime = 0;
+        video2.currentTime = 0;
+        video3.currentTime = 0;
     } catch (error) {
         console.log(error);
     }
@@ -115,9 +130,13 @@ target.addEventListener("targetFound", async () => {
 
     // Resume video
 
-    if (video.paused) {
+    if (video.paused || video1.paused || video2.paused || video3.paused ) {
         try {
             await video.play();
+            await video1.play();
+            await video2.play();
+            await video3.play();
+
         } catch (error) {
             console.log(error);
         }
@@ -137,7 +156,11 @@ target.addEventListener("targetLost", () => {
 
     lostTimer = setTimeout(() => {
         if (targetLost) {
+            
             video.pause();
+            video1.pause();
+            video2.pause();
+            video3.pause();
 
             modal.style.display = "flex";
         }
@@ -152,7 +175,12 @@ continueBtn.addEventListener("click", async () => {
     modal.style.display = "none";
 
     try {
+
         await video.play();
+        await video1.play();
+        await video2.play();
+        await video3.play();
+
     } catch (error) {
         console.log(error);
     }
@@ -166,8 +194,14 @@ closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
 
     video.pause();
+    video1.pause();
+    video2.pause();
+    video3.pause();
 
     video.currentTime = 0;
+    video1.currentTime = 0;
+    video2.currentTime = 0;
+    video3.currentTime = 0;
 
     videoPlane.setAttribute("visible", false);
 });
@@ -180,6 +214,18 @@ video.addEventListener("ended", () => {
     replayCard.style.display = "block";
 });
 
+video1.addEventListener("ended", () => {
+    replayCard.style.display = "block";
+});
+
+video2.addEventListener("ended", () => {
+    replayCard.style.display = "block";
+});
+
+video3.addEventListener("ended", () => {
+    replayCard.style.display = "block";
+});
+
 // =========================
 // REPLAY
 // =========================
@@ -188,9 +234,17 @@ replayBtn.addEventListener("click", async () => {
     replayCard.style.display = "none";
 
     video.currentTime = 0;
+    video1.currentTime = 0;
+    video2.currentTime = 0;
+    video3.currentTime = 0;
 
     try {
+
         await video.play();
+        await video1.play();
+        await video2.play();
+        await video3.play();
+        
     } catch (error) {
         console.log(error);
     }
