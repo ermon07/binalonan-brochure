@@ -13,6 +13,9 @@ const closeBtn = document.getElementById("closeBtn");
 const replayCard = document.getElementById("replayCard");
 const replayBtn = document.getElementById("replayBtn");
 
+const playOverlay = document.getElementById("playOverlay");
+const playBtn = document.getElementById("playBtn");
+
 // =====================================================
 // VIDEOS
 // =====================================================
@@ -58,6 +61,10 @@ let currentTarget = null;
 
 let lostTimer = null;
 let targetLost = false;
+
+let selectedIndex = null;
+let isPlaying = false;
+
 
 // =====================================================
 // MOBILE CHECK
@@ -169,23 +176,19 @@ targets.forEach((target, index) => {
 
     hideAllPlanes();
 
-    // Set active target
+    
+      if (isPlaying) return;
 
-    currentTarget = target;
+      selectedIndex = index;
 
-    currentVideo = videos[index];
+      currentTarget = target;
 
-    currentPlane = planes[index];
+      currentVideo = videos[index];
 
-    // Show current AR plane
+      currentPlane = planes[index];
 
-    currentPlane.setAttribute("visible", true);
+      playOverlay.style.display = "flex";
 
-    try {
-      await currentVideo.play();
-    } catch (error) {
-      console.log("Video play error:", error);
-    }
   });
 });
 
@@ -211,6 +214,38 @@ targets.forEach((target, index) => {
       }
     }, 5000);
   });
+});
+
+// =====================================================
+// PLAY BUTTON
+// =====================================================
+
+playBtn.addEventListener("click", async ()=>{
+
+    playOverlay.style.display="none";
+
+    if(selectedIndex===null) return;
+
+    isPlaying=true;
+
+    hideAllPlanes();
+
+    currentPlane=planes[selectedIndex];
+
+    currentVideo=videos[selectedIndex];
+
+    currentPlane.setAttribute("visible",true);
+
+    try{
+
+        await currentVideo.play();
+
+    }catch(e){
+
+        console.log(e);
+
+    }
+
 });
 
 // =====================================================
@@ -253,6 +288,12 @@ closeBtn.addEventListener("click", () => {
   currentPlane = null;
 
   currentTarget = null;
+
+  isPlaying=false;
+
+  selectedIndex=null;
+
+  playOverlay.style.display="none";
 });
 
 // =====================================================
@@ -261,7 +302,9 @@ closeBtn.addEventListener("click", () => {
 
 videos.forEach((video) => {
   video.addEventListener("ended", () => {
-    replayCard.style.display = "block";
+    isPlaying=false;
+    selectedIndex=null;
+    replayCard.style.display="block";
   });
 });
 
@@ -278,6 +321,7 @@ replayBtn.addEventListener("click", async () => {
 
   try {
     await currentVideo.play();
+    isPlaying=true;
   } catch (error) {
     console.log(error);
   }
