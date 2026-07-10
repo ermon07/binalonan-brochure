@@ -4,333 +4,932 @@
 
 const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("start-btn");
+
 const guide = document.getElementById("guide");
 
-const modal = document.getElementById("trackingModal");
-const continueBtn = document.getElementById("continueBtn");
-const closeBtn = document.getElementById("closeBtn");
 
-const replayCard = document.getElementById("replayCard");
-const replayBtn = document.getElementById("replayBtn");
+// Control Card
 
-const playOverlay = document.getElementById("playOverlay");
-const playBtn = document.getElementById("playBtn");
+const controlCard = document.getElementById("controlCard");
+
+const destinationTitle = document.getElementById(
+    "destinationTitle"
+);
+
+const destinationStatus = document.getElementById(
+    "destinationStatus"
+);
+
+
+const playBtn = document.getElementById(
+    "playBtn"
+);
+
+const resumeBtn = document.getElementById(
+    "resumeBtn"
+);
+
+const restartBtn = document.getElementById(
+    "restartBtn"
+);
+
+const closeBtn = document.getElementById(
+    "closeBtn"
+);
+
+
 
 // =====================================================
 // VIDEOS
 // =====================================================
 
 const videos = [
-  document.getElementById("video0"),
-  document.getElementById("video1"),
-  document.getElementById("video2"),
-  document.getElementById("video3"),
+
+    document.getElementById("video0"),
+
+    document.getElementById("video1"),
+
+    document.getElementById("video2"),
+
+    document.getElementById("video3")
+
 ];
+
 
 // =====================================================
 // TARGETS
 // =====================================================
 
 const targets = [
-  document.getElementById("target0"),
-  document.getElementById("target1"),
-  document.getElementById("target2"),
-  document.getElementById("target3"),
+
+    document.getElementById("target0"),
+
+    document.getElementById("target1"),
+
+    document.getElementById("target2"),
+
+    document.getElementById("target3")
+
 ];
 
+
 // =====================================================
-// VIDEO PLANES
+// PLANES
 // =====================================================
 
 const planes = [
-  document.getElementById("plane0"),
-  document.getElementById("plane1"),
-  document.getElementById("plane2"),
-  document.getElementById("plane3"),
+
+    document.getElementById("plane0"),
+
+    document.getElementById("plane1"),
+
+    document.getElementById("plane2"),
+
+    document.getElementById("plane3")
+
 ];
+
+
+
+// =====================================================
+// DESTINATION DATA
+// =====================================================
+
+
+const destinations = [
+
+    {
+
+        id:0,
+
+        name:"Destination 1",
+
+        target:targets[0],
+
+        plane:planes[0],
+
+        video:videos[0],
+
+
+        started:false,
+
+        completed:false,
+
+        currentTime:0
+
+    },
+
+
+    {
+
+        id:1,
+
+        name:"Destination 2",
+
+        target:targets[1],
+
+        plane:planes[1],
+
+        video:videos[1],
+
+
+        started:false,
+
+        completed:false,
+
+        currentTime:0
+
+    },
+
+
+    {
+
+        id:2,
+
+        name:"Destination 3",
+
+        target:targets[2],
+
+        plane:planes[2],
+
+        video:videos[2],
+
+
+        started:false,
+
+        completed:false,
+
+        currentTime:0
+
+    },
+
+
+    {
+
+        id:3,
+
+        name:"Destination 4",
+
+        target:targets[3],
+
+        plane:planes[3],
+
+        video:videos[3],
+
+
+        started:false,
+
+        completed:false,
+
+        currentTime:0
+
+    }
+
+];
+
+
 
 // =====================================================
 // VARIABLES
 // =====================================================
 
+
 let started = false;
 
-let currentVideo = null;
-let currentPlane = null;
-let currentTarget = null;
 
-let lostTimer = null;
-let targetLost = false;
+let activeDestination = null;
 
-let selectedIndex = null;
+
+let detectedDestination = null;
+
+
 let isPlaying = false;
 
-
 // =====================================================
-// MOBILE CHECK
+// HELPERS
 // =====================================================
 
-function isMobile() {
-  return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+function hideAllPlanes(){
+
+    planes.forEach(plane=>{
+
+        plane.setAttribute(
+            "visible",
+            false
+        );
+
+    });
+
 }
 
-window.addEventListener("load", () => {
-  if (!isMobile()) {
-    const warning = document.getElementById("desktop-warning");
 
-    warning.style.display = "flex";
 
-    document.querySelector("a-scene").style.display = "none";
-  }
-});
+function pauseActiveVideo(){
 
-// =====================================================
-// START EXPERIENCE
-// =====================================================
 
-startBtn.addEventListener("click", async () => {
-  started = true;
+    if(!activeDestination)
+        return;
 
-  startScreen.style.opacity = "0";
 
-  setTimeout(() => {
-    startScreen.style.display = "none";
 
-    guide.style.display = "block";
-  }, 500);
+    const video =
+        activeDestination.video;
 
-  // Unlock all videos for iOS
 
-  try {
-    for (const video of videos) {
-      video.muted = false;
 
-      await video.play();
+    activeDestination.currentTime =
+        video.currentTime;
 
-      video.pause();
 
-      video.currentTime = 0;
+
+    video.pause();
+
+
+
+}
+
+
+
+function showControls(destination){
+
+
+    detectedDestination = destination;
+
+
+    controlCard.style.display="block";
+
+
+    destinationTitle.innerText =
+        destination.name;
+
+
+
+    if(
+        destination.completed
+    ){
+
+        destinationStatus.innerText =
+            "Video finished";
+
+
+        playBtn.style.display="block";
+
+        resumeBtn.style.display="none";
+
+        restartBtn.style.display="none";
+
+
     }
-  } catch (err) {
-    console.log(err);
-  }
-});
 
-// =====================================================
-// HELPER FUNCTIONS
-// =====================================================
+    else if(
+        destination.started
+    ){
 
-function pauseAllVideos() {
-  videos.forEach((video) => {
-    video.pause();
-  });
+        destinationStatus.innerText =
+            "Continue watching";
+
+
+        playBtn.style.display="none";
+
+        resumeBtn.style.display="block";
+
+        restartBtn.style.display="block";
+
+
+    }
+
+    else{
+
+
+        destinationStatus.innerText =
+            "New experience";
+
+
+        playBtn.style.display="block";
+
+        resumeBtn.style.display="none";
+
+        restartBtn.style.display="none";
+
+
+    }
+
+
 }
 
-function hideAllPlanes() {
-  planes.forEach((plane) => {
-    plane.setAttribute("visible", false);
-  });
-}
 
-function resetAllVideos() {
-  videos.forEach((video) => {
-    video.pause();
 
-    video.currentTime = 0;
-  });
+function hideControls(){
+
+
+    controlCard.style.display="none";
+
+
 }
 
 // =====================================================
 // TARGET FOUND
 // =====================================================
 
-targets.forEach((target, index) => {
-  target.addEventListener("targetFound", async () => {
-    if (!started) return;
 
-    console.log("TARGET FOUND:", index);
+targets.forEach((target,index)=>{
 
-    targetLost = false;
 
-    if (lostTimer) {
-      clearTimeout(lostTimer);
+    target.addEventListener(
+        "targetFound",
+        ()=>{
 
-      lostTimer = null;
-    }
 
-    // Hide guide
+            if(!started)
+                return;
 
-    guide.style.display = "none";
 
-    // Hide tracking modal
 
-    modal.style.display = "none";
+            console.log(
+                "Target Found:",
+                index
+            );
 
-    // If another target was active
 
-    if (currentVideo && currentVideo !== videos[index]) {
-      currentVideo.pause();
-    }
 
-    // Hide previous planes
+            guide.style.display="none";
+
+
+
+            const destination =
+                destinations[index];
+
+
+
+            // If another video is playing
+
+            if(
+                activeDestination &&
+                activeDestination !== destination
+            ){
+
+                pauseActiveVideo();
+
+                hideAllPlanes();
+
+                isPlaying=false;
+
+            }
+
+
+
+            activeDestination =
+                destination;
+
+
+
+            showControls(
+                destination
+            );
+
+
+        }
+
+    );
+
+
+});
+
+
+
+
+// =====================================================
+// PLAY BUTTON
+// =====================================================
+
+
+playBtn.addEventListener(
+"click",
+async()=>{
+
+
+    if(!detectedDestination)
+        return;
+
+
+
+    const destination =
+        detectedDestination;
+
+
+
+    activeDestination =
+        destination;
+
+
+
+    destination.started=true;
+
+    destination.completed=false;
+
+
+    destination.video.currentTime=0;
+
+
 
     hideAllPlanes();
 
-    
-      if (isPlaying) return;
 
-      selectedIndex = index;
 
-      currentTarget = target;
+    destination.plane.setAttribute(
+        "visible",
+        true
+    );
 
-      currentVideo = videos[index];
 
-      currentPlane = planes[index];
 
-      playOverlay.style.display = "flex";
+    hideControls();
 
-  });
+
+
+    isPlaying=true;
+
+
+
+    try{
+
+
+        await destination.video.play();
+
+
+    }
+    catch(error){
+
+
+        console.log(error);
+
+
+    }
+
+
+
+});
+
+
+
+
+// =====================================================
+// RESUME BUTTON
+// =====================================================
+
+
+resumeBtn.addEventListener(
+"click",
+async()=>{
+
+
+    if(!detectedDestination)
+        return;
+
+
+
+    const destination =
+        detectedDestination;
+
+
+
+    activeDestination =
+        destination;
+
+
+
+    hideAllPlanes();
+
+
+
+    destination.plane.setAttribute(
+        "visible",
+        true
+    );
+
+
+
+    destination.video.currentTime =
+        destination.currentTime;
+
+
+
+    hideControls();
+
+
+
+    isPlaying=true;
+
+
+
+    try{
+
+
+        await destination.video.play();
+
+
+    }
+    catch(error){
+
+
+        console.log(error);
+
+
+    }
+
+
+});
+
+
+
+
+// =====================================================
+// RESTART BUTTON
+// =====================================================
+
+
+restartBtn.addEventListener(
+"click",
+async()=>{
+
+
+    if(!detectedDestination)
+        return;
+
+
+
+    const destination =
+        detectedDestination;
+
+
+
+    activeDestination =
+        destination;
+
+
+
+    destination.currentTime=0;
+
+    destination.video.currentTime=0;
+
+
+
+    destination.completed=false;
+
+    destination.started=true;
+
+
+
+    hideAllPlanes();
+
+
+
+    destination.plane.setAttribute(
+        "visible",
+        true
+    );
+
+
+
+    hideControls();
+
+
+
+    isPlaying=true;
+
+
+
+    try{
+
+
+        await destination.video.play();
+
+
+    }
+    catch(error){
+
+
+        console.log(error);
+
+
+    }
+
+
 });
 
 // =====================================================
 // TARGET LOST
 // =====================================================
 
-targets.forEach((target, index) => {
-  target.addEventListener("targetLost", () => {
-    if (!started) return;
 
-    console.log("TARGET LOST:", index);
+targets.forEach((target,index)=>{
 
-    targetLost = true;
 
-    lostTimer = setTimeout(() => {
-      if (targetLost) {
-        if (currentVideo) {
-          currentVideo.pause();
+    target.addEventListener(
+        "targetLost",
+        ()=>{
+
+
+            if(!started)
+                return;
+
+
+
+            console.log(
+                "Target Lost:",
+                index
+            );
+
+
+
+            if(
+                activeDestination &&
+                activeDestination.target === target
+            ){
+
+                pauseActiveVideo();
+
+
+                hideAllPlanes();
+
+
+                isPlaying=false;
+
+
+            }
+
+
         }
 
-        modal.style.display = "flex";
-      }
-    }, 5000);
-  });
-});
+    );
 
-// =====================================================
-// PLAY BUTTON
-// =====================================================
-
-playBtn.addEventListener("click", async ()=>{
-
-    playOverlay.style.display="none";
-
-    if(selectedIndex===null) return;
-
-    isPlaying=true;
-
-    hideAllPlanes();
-
-    currentPlane=planes[selectedIndex];
-
-    currentVideo=videos[selectedIndex];
-
-    currentPlane.setAttribute("visible",true);
-
-    try{
-
-        await currentVideo.play();
-
-    }catch(e){
-
-        console.log(e);
-
-    }
 
 });
 
-// =====================================================
-// CONTINUE WATCHING
-// =====================================================
 
-continueBtn.addEventListener("click", async () => {
-  modal.style.display = "none";
 
-  targetLost = false;
-
-  if (currentVideo) {
-    try {
-      await currentVideo.play();
-    } catch (error) {
-      console.log(error);
-    }
-  }
-});
-
-// =====================================================
-// CLOSE VIDEO
-// =====================================================
-
-closeBtn.addEventListener("click", () => {
-  modal.style.display = "none";
-
-  targetLost = false;
-
-  if (currentVideo) {
-    currentVideo.pause();
-
-    currentVideo.currentTime = 0;
-  }
-
-  hideAllPlanes();
-
-  currentVideo = null;
-
-  currentPlane = null;
-
-  currentTarget = null;
-
-  isPlaying=false;
-
-  selectedIndex=null;
-
-  playOverlay.style.display="none";
-});
 
 // =====================================================
 // VIDEO FINISHED
 // =====================================================
 
-videos.forEach((video) => {
-  video.addEventListener("ended", () => {
+
+destinations.forEach(destination=>{
+
+
+    destination.video.addEventListener(
+        "ended",
+        ()=>{
+
+
+            console.log(
+                "Finished:",
+                destination.name
+            );
+
+
+
+            destination.completed=true;
+
+
+            destination.currentTime=0;
+
+
+            destination.started=true;
+
+
+
+            isPlaying=false;
+
+
+
+            hideAllPlanes();
+
+
+
+            if(
+                activeDestination === destination
+            ){
+
+                showControls(
+                    destination
+                );
+
+            }
+
+
+        }
+
+    );
+
+
+});
+
+
+
+
+// =====================================================
+// CLOSE BUTTON
+// =====================================================
+
+
+closeBtn.addEventListener(
+"click",
+()=>{
+
+
+    if(activeDestination){
+
+
+        pauseActiveVideo();
+
+
+    }
+
+
+
+    hideAllPlanes();
+
+
+
+    hideControls();
+
+
+
     isPlaying=false;
-    selectedIndex=null;
-    replayCard.style.display="block";
-  });
+
+
+
 });
 
+
+
+
 // =====================================================
-// REPLAY VIDEO
+// START EXPERIENCE
 // =====================================================
 
-replayBtn.addEventListener("click", async () => {
-  replayCard.style.display = "none";
 
-  if (!currentVideo) return;
+startBtn.addEventListener(
+"click",
+async()=>{
 
-  currentVideo.currentTime = 0;
 
-  try {
-    await currentVideo.play();
-    isPlaying=true;
-  } catch (error) {
-    console.log(error);
-  }
+    started=true;
+
+
+
+    startScreen.style.opacity="0";
+
+
+
+    setTimeout(()=>{
+
+
+        startScreen.style.display="none";
+
+
+        guide.style.display="block";
+
+
+    },500);
+
+
+
+    // Unlock videos for mobile browsers
+
+
+    try{
+
+
+        for(
+            const destination
+            of destinations
+        ){
+
+
+            const video =
+                destination.video;
+
+
+
+            video.muted=false;
+
+
+
+            await video.play();
+
+
+
+            video.pause();
+
+
+
+            video.currentTime=0;
+
+
+        }
+
+
+    }
+    catch(error){
+
+
+        console.log(error);
+
+
+    }
+
+
+
 });
 
+
+
+
 // =====================================================
-// SAFETY CLEANUP
+// MOBILE CHECK
 // =====================================================
 
-window.addEventListener("beforeunload", () => {
-  resetAllVideos();
+
+function isMobile(){
+
+
+    return /Android|iPhone|iPad|iPod/i
+    .test(
+        navigator.userAgent
+    );
+
+
+}
+
+
+
+window.addEventListener(
+"load",
+()=>{
+
+
+    if(!isMobile()){
+
+
+        const warning =
+        document.getElementById(
+            "desktop-warning"
+        );
+
+
+        if(warning){
+
+            warning.style.display="flex";
+
+        }
+
+
+
+        const scene =
+        document.querySelector(
+            "a-scene"
+        );
+
+
+        if(scene){
+
+            scene.style.display="none";
+
+        }
+
+
+    }
+
+
+
+});
+
+
+
+
+// =====================================================
+// RESET ON PAGE EXIT
+// =====================================================
+
+
+window.addEventListener(
+"beforeunload",
+()=>{
+
+
+    destinations.forEach(
+        destination=>{
+
+
+            destination.video.pause();
+
+
+        }
+
+    );
+
+
 });

@@ -1,486 +1,659 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
+
 
 html,
 body {
-  width: 100%;
-  height: 100%;
 
-  overflow: hidden;
+    width:100%;
+    height:100%;
 
-  font-family: "Segoe UI", Arial, sans-serif;
+    overflow:hidden;
+
+    font-family:"Segoe UI",Arial,sans-serif;
+
 }
+
 
 /* =========================
 DESKTOP WARNING
 ========================= */
 
+
 #desktop-warning {
-  position: fixed;
 
-  inset: 0;
+    position:fixed;
 
-  display: none;
+    inset:0;
 
-  justify-content: center;
+    display:none;
 
-  align-items: center;
+    justify-content:center;
 
-  background: linear-gradient(180deg, #153C4B, #008C95);
+    align-items:center;
 
-  color: white;
+    background:
+    linear-gradient(
+        180deg,
+        #153C4B,
+        #008C95
+    );
 
-  z-index: 99999;
+    color:white;
 
-  text-align: center;
+    z-index:99999;
 
-  padding: 20px;
+    text-align:center;
+
+    padding:20px;
+
 }
+
+
 
 #desktop-warning .box {
-  background: rgba(255, 255, 255, 0.12);
 
-  padding: 30px;
+    background:
+    rgba(255,255,255,.12);
 
-  border-radius: 25px;
+    padding:30px;
 
-  backdrop-filter: blur(10px);
+    border-radius:25px;
 
-  max-width: 350px;
+    backdrop-filter:blur(10px);
+
+    max-width:350px;
+
 }
+
+
 
 #desktop-warning h2 {
-  color: #9CCB3B;
 
-  margin-bottom: 15px;
+    color:#9CCB3B;
+
+    margin-bottom:15px;
+
 }
+
+
 
 #desktop-warning p {
-  line-height: 1.6;
+
+    line-height:1.6;
+
 }
+
+
 
 #desktop-warning .small {
-  font-size: 14px;
 
-  opacity: 0.8;
+    font-size:14px;
 
-  margin-top: 10px;
+    opacity:.8;
+
+    margin-top:10px;
+
 }
+
+
+
+
 
 /* =========================
 START SCREEN
 ========================= */
 
+
 #start-screen {
-  position: fixed;
 
-  inset: 0;
+    position:fixed;
 
-  display: flex;
+    inset:0;
 
-  align-items: center;
+    display:flex;
 
-  justify-content: center;
+    justify-content:center;
 
-  background: radial-gradient(circle at top, #45C3A7, transparent 40%),
-    linear-gradient(180deg, #153C4B, #008C95);
+    align-items:center;
 
-  z-index: 9000;
+    background:
 
-  transition: 0.5s;
+    radial-gradient(
+        circle at top,
+        #45C3A7,
+        transparent 40%
+    ),
+
+    linear-gradient(
+        180deg,
+        #153C4B,
+        #008C95
+    );
+
+
+    z-index:9000;
+
+    transition:.5s;
+
 }
+
+
 
 .card {
-  width: 360px;
 
-  max-width: 90%;
+    width:360px;
 
-  background: white;
+    max-width:90%;
 
-  padding: 35px;
 
-  border-radius: 30px;
+    background:white;
 
-  text-align: center;
+    padding:35px;
 
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    border-radius:30px;
 
-  animation: slideUp 0.7s ease;
+    text-align:center;
+
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,.3);
+
+
+    animation:slideUp .7s ease;
+
 }
+
+
 
 @keyframes slideUp {
-  from {
-    opacity: 0;
 
-    transform: translateY(40px);
-  }
+from{
 
-  to {
-    opacity: 1;
+    opacity:0;
 
-    transform: translateY(0);
-  }
+    transform:translateY(40px);
+
 }
+
+
+to{
+
+    opacity:1;
+
+    transform:translateY(0);
+
+}
+
+}
+
+
 
 .logo {
-  width: 90px;
 
-  margin-bottom: 15px;
+    width:90px;
+
+    margin-bottom:15px;
+
 }
+
+
 
 h1 {
-  color: #153C4B;
 
-  font-size: 34px;
+    color:#153C4B;
+
+    font-size:34px;
+
 }
+
+
 
 .subtitle {
-  color: #008C95;
 
-  font-weight: 700;
+    color:#008C95;
 
-  margin-top: 8px;
+    font-weight:700;
+
+    margin-top:8px;
+
 }
+
+
 
 .description {
-  margin-top: 20px;
 
-  color: #666;
+    margin-top:20px;
 
-  line-height: 1.7;
+    color:#666;
+
+    line-height:1.7;
+
 }
+
+
+
+
 
 /* =========================
 FEATURES
 ========================= */
 
+
 .features {
-  margin: 30px 0;
+
+    margin:30px 0;
+
 }
+
+
 
 .feature {
-  display: flex;
 
-  align-items: center;
+    display:flex;
 
-  gap: 15px;
+    align-items:center;
 
-  margin-bottom: 20px;
+    gap:15px;
 
-  text-align: left;
+    margin-bottom:20px;
+
+    text-align:left;
+
 }
+
+
 
 .icon {
-  width: 55px;
 
-  height: 55px;
+    width:55px;
 
-  display: flex;
+    height:55px;
 
-  justify-content: center;
 
-  align-items: center;
+    display:flex;
 
-  border-radius: 50%;
+    justify-content:center;
 
-  font-size: 25px;
+    align-items:center;
 
-  background: linear-gradient(135deg, #45C3A7, #008C95);
+
+    border-radius:50%;
+
+
+    font-size:25px;
+
+
+    background:
+    linear-gradient(
+        135deg,
+        #45C3A7,
+        #008C95
+    );
+
 }
+
+
 
 .feature h3 {
-  color: #153C4B;
+
+    color:#153C4B;
+
 }
+
+
 
 .feature span {
-  color: #777;
 
-  font-size: 14px;
+    color:#777;
+
+    font-size:14px;
+
 }
+
+
+
+
 
 /* =========================
 START BUTTON
 ========================= */
 
+
 #start-btn {
-  width: 100%;
 
-  padding: 17px;
 
-  border: none;
+    width:100%;
 
-  border-radius: 15px;
 
-  cursor: pointer;
+    padding:17px;
 
-  font-size: 18px;
 
-  font-weight: 700;
+    border:none;
 
-  color: #153C4B;
 
-  background: linear-gradient(90deg, #9CCB3B, #7FD24B);
+    border-radius:15px;
 
-  transition: 0.3s;
+
+    cursor:pointer;
+
+
+    font-size:18px;
+
+
+    font-weight:700;
+
+
+    color:#153C4B;
+
+
+    background:
+    linear-gradient(
+        90deg,
+        #9CCB3B,
+        #7FD24B
+    );
+
+
 }
 
-#start-btn:hover {
-  transform: translateY(-3px);
-}
+
+
+
 
 /* =========================
 SCAN GUIDE
 ========================= */
 
+
 #guide {
-  position: fixed;
-
-  inset: 0;
-
-  display: none;
-
-  z-index: 500;
-
-  pointer-events: none;
-}
-
-.scan-box {
-  position: absolute;
-
-  width: 260px;
-
-  height: 260px;
-
-  top: 50%;
-
-  left: 50%;
-
-  transform: translate(-50%, -50%);
-
-  border: 4px solid #9CCB3B;
-
-  border-radius: 20px;
-
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  50% {
-    opacity: 0.5;
-
-    transform: translate(-50%, -50%) scale(0.95);
-  }
-}
-
-#guide p {
-  position: absolute;
-
-  bottom: 60px;
-
-  width: 100%;
-
-  text-align: center;
-
-  color: white;
-
-  font-size: 18px;
-
-  font-weight: 600;
-}
-
-/* =========================
-TRACKING LOST MODAL
-========================= */
-
-#trackingModal {
-  position: fixed;
-
-  inset: 0;
-
-  display: none;
-
-  justify-content: center;
-
-  align-items: center;
-
-  background: rgba(0, 0, 0, 0.55);
-
-  backdrop-filter: blur(8px);
-
-  z-index: 9999;
-}
-
-.tracking-card {
-  width: 330px;
-
-  max-width: 90%;
-
-  background: white;
-
-  border-radius: 25px;
-
-  padding: 30px;
-
-  text-align: center;
-}
-
-.tracking-card h2 {
-  color: #153C4B;
-
-  margin-bottom: 10px;
-}
-
-.tracking-card p {
-  color: #666;
-
-  margin-bottom: 25px;
-}
-
-.modal-buttons {
-  display: flex;
-
-  gap: 12px;
-}
-
-.modal-buttons button {
-  flex: 1;
-
-  padding: 14px;
-
-  border: none;
-
-  border-radius: 12px;
-
-  cursor: pointer;
-
-  font-weight: 700;
-}
-
-#continueBtn {
-  background: #008C95;
-
-  color: white;
-}
-
-#closeBtn {
-  background: #ddd;
-}
-
-/* =========================
-REPLAY CARD
-========================= */
-
-#replayCard {
-  position: fixed;
-
-  bottom: 30px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  width: 330px;
-
-  max-width: 90%;
-
-  background: white;
-
-  padding: 25px;
-
-  border-radius: 25px;
-
-  text-align: center;
-
-  z-index: 9998;
-
-  display: none;
-
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-}
-
-#replayCard h2 {
-  color: #153C4B;
-
-  margin-bottom: 10px;
-}
-
-#replayCard p {
-  color: #666;
-
-  margin-bottom: 20px;
-}
-
-#replayBtn {
-  width: 100%;
-
-  padding: 15px;
-
-  border: none;
-
-  border-radius: 15px;
-
-  cursor: pointer;
-
-  font-weight: 700;
-
-  font-size: 16px;
-
-  background: linear-gradient(90deg, #9CCB3B, #7FD24B);
-
-  color: #153C4B;
-}
-
-a-scene {
-  width: 100%;
-
-  height: 100%;
-}
-
-/* =========================
-PLAY BUTTON
-========================= */
-
-#playOverlay{
-    display:none;
 
     position:fixed;
 
-    left:0;
-    top:0;
+    inset:0;
 
-    width:100%;
-    height:100%;
+    display:none;
 
-    justify-content:center;
-    align-items:center;
+    z-index:500;
 
-    z-index:999;
+    pointer-events:none;
+
 }
 
-#playBtn{
 
-    padding:18px 36px;
 
-    font-size:22px;
+.scan-box {
 
-    border:none;
 
-    border-radius:40px;
+    position:absolute;
 
-    background:#009688;
+
+    width:260px;
+
+
+    height:260px;
+
+
+    top:50%;
+
+
+    left:50%;
+
+
+    transform:
+    translate(-50%,-50%);
+
+
+    border:
+    4px solid #9CCB3B;
+
+
+    border-radius:20px;
+
+
+    animation:pulse 1.5s infinite;
+
+
+}
+
+
+
+@keyframes pulse {
+
+
+50%{
+
+opacity:.5;
+
+
+transform:
+translate(-50%,-50%)
+scale(.95);
+
+
+}
+
+
+}
+
+
+
+#guide p {
+
+
+    position:absolute;
+
+
+    bottom:60px;
+
+
+    width:100%;
+
+
+    text-align:center;
+
 
     color:white;
 
-    cursor:pointer;
 
-    box-shadow:0 8px 20px rgba(0,0,0,.3);
+    font-size:18px;
+
+
+    font-weight:600;
+
+
 }
 
-#playBtn:active{
 
-    transform:scale(.96);
+
+
+
+/* =========================
+VIDEO CONTROL CARD
+========================= */
+
+
+#controlCard {
+
+
+    position:fixed;
+
+
+    bottom:30px;
+
+
+    left:50%;
+
+
+    transform:
+    translateX(-50%);
+
+
+
+    width:330px;
+
+
+    max-width:90%;
+
+
+
+    background:white;
+
+
+
+    padding:25px;
+
+
+
+    border-radius:25px;
+
+
+
+    text-align:center;
+
+
+
+    display:none;
+
+
+
+    z-index:9999;
+
+
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,.3);
+
+
+
+}
+
+
+
+#controlCard h2 {
+
+
+    color:#153C4B;
+
+
+    margin-bottom:8px;
+
+
+}
+
+
+
+#destinationStatus {
+
+
+    color:#666;
+
+
+    margin-bottom:20px;
+
+
+}
+
+
+
+
+
+#controlCard button {
+
+
+    width:100%;
+
+
+    padding:15px;
+
+
+    margin-top:10px;
+
+
+    border:none;
+
+
+    border-radius:15px;
+
+
+    cursor:pointer;
+
+
+    font-size:16px;
+
+
+    font-weight:700;
+
+
+}
+
+
+
+
+
+#playBtn,
+#restartBtn {
+
+
+    background:
+    linear-gradient(
+        90deg,
+        #9CCB3B,
+        #7FD24B
+    );
+
+
+    color:#153C4B;
+
+
+}
+
+
+
+
+#resumeBtn {
+
+
+    background:#008C95;
+
+
+    color:white;
+
+
+}
+
+
+
+
+#closeBtn {
+
+
+    background:#ddd;
+
+
+    color:#333;
+
+
+}
+
+
+
+
+
+/* =========================
+AFRAME
+========================= */
+
+
+a-scene {
+
+
+    width:100%;
+
+    height:100%;
+
 
 }
