@@ -1,280 +1,643 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 
     <title>Binalonan AR</title>
 
-    <link rel="stylesheet" href="style.css" />
 
+    <link rel="stylesheet" href="style.css">
+
+
+    <!-- AFRAME -->
     <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-  </head>
 
-  <body>
-    <!-- =========================
+    <!-- MIND AR -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+
+
+</head>
+
+
+
+<body>
+
+
+<!-- =========================
 DESKTOP WARNING
 ========================= -->
 
-    <div id="desktop-warning">
-      <div class="box">
-        <h2>📱 Mobile Only Experience</h2>
 
-        <p>Please open this AR experience using a smartphone.</p>
+<div id="desktop-warning">
 
-        <p class="small">Camera AR is not supported on desktop.</p>
-      </div>
-    </div>
 
-    <!-- =========================
-START SCREEN
-========================= -->
+    <div class="box">
 
-    <div id="start-screen">
-      <div class="card">
-        <img src="assets/logo.png" class="logo" />
 
-        <h1>Binalonan AR</h1>
+        <h2>
+            📱 Mobile Only Experience
+        </h2>
 
-        <p class="subtitle">Discover. Experience. Remember.</p>
 
-        <p class="description">
-          Bring the tourism brochure to life. Scan one of the featured
-          destinations and experience Binalonan through Augmented Reality.
+        <p>
+            Please open this AR experience using a smartphone.
         </p>
 
-        <div class="features">
-          <div class="feature">
-            <div class="icon">📷</div>
 
-            <div>
-              <h3>Scan</h3>
-              <span>Point your camera</span>
-            </div>
-          </div>
+        <p class="small">
+            Camera AR is not supported on desktop.
+        </p>
 
-          <div class="feature">
-            <div class="icon">🎬</div>
-
-            <div>
-              <h3>Watch</h3>
-              <span>Experience the story</span>
-            </div>
-          </div>
-
-          <div class="feature">
-            <div class="icon">📍</div>
-
-            <div>
-              <h3>Explore</h3>
-              <span>Discover destinations</span>
-            </div>
-          </div>
-        </div>
-
-        <button id="start-btn">▶ Start AR Experience</button>
-      </div>
-    </div>
-
-    <!-- =========================
-SCAN GUIDE
-========================= -->
-
-    <div id="guide">
-      <div class="scan-box"></div>
-
-      <p>Point the camera at any destination image inside the brochure.</p>
-    </div>
-
-    <!-- =========================
-CONTROL CARD
-========================= -->
-
-<div id="controlCard">
-
-    <h2 id="destinationTitle">
-        Destination
-    </h2>
-
-    <p id="destinationStatus">
-        Ready
-    </p>
-
-    <div class="buttons">
-
-        <button id="playBtn">
-            ▶ Play
-        </button>
-
-        <button id="resumeBtn">
-            ▶ Resume
-        </button>
-
-        <button id="restartBtn">
-            ↺ Restart
-        </button>
-
-        <button id="closeBtn">
-            ✕ Close
-        </button>
 
     </div>
+
 
 </div>
 
 
-    <!-- =========================
+
+
+
+<!-- =========================
+START SCREEN
+========================= -->
+
+
+<div id="start-screen">
+
+
+    <div class="card">
+
+
+        <img 
+        src="assets/logo.png"
+        class="logo">
+
+
+        <h1>
+            Binalonan AR
+        </h1>
+
+
+        <p class="subtitle">
+            Discover. Experience. Remember.
+        </p>
+
+
+
+        <p class="description">
+
+            Bring the tourism brochure to life.
+            Scan the images and explore Binalonan
+            through augmented reality.
+
+        </p>
+
+
+
+
+        <div class="features">
+
+
+            <div class="feature">
+
+
+                <div class="icon">
+                    📷
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Scan
+                    </h3>
+
+                    <span>
+                        Point your camera
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+
+            <div class="feature">
+
+
+                <div class="icon">
+                    🎬
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Watch
+                    </h3>
+
+                    <span>
+                        Experience the story
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+
+
+            <div class="feature">
+
+
+                <div class="icon">
+                    📍
+                </div>
+
+
+                <div>
+
+                    <h3>
+                        Explore
+                    </h3>
+
+                    <span>
+                        Discover destinations
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+        <button id="start-btn">
+
+            ▶ Start AR Experience
+
+        </button>
+
+
+
+    </div>
+
+
+</div>
+
+
+
+
+
+<!-- =========================
+SCAN GUIDE
+========================= -->
+
+
+<div id="guide">
+
+
+    <div class="scan-box"></div>
+
+
+    <p>
+        Point camera at the brochure
+    </p>
+
+
+</div>
+
+<!-- =========================
 AR SCENE
 ========================= -->
 
-    <a-scene
-      mindar-image="
-imageTargetSrc: assets/targets.mind;
-filterMinCF:0.001;
-filterBeta:0.01;
-"
-      color-space="sRGB"
-      renderer="
-colorManagement:true;
-"
-      vr-mode-ui="
-enabled:false;
-"
-      device-orientation-permission-ui="
-enabled:true;
-"
-    >
-      <!-- =========================
-    ASSETS
-    ========================= -->
 
-      <a-assets>
-        <video
-          id="video0"
-          src="assets/promo.mp4"
-          preload="auto"
-          playsinline
-          webkit-playsinline
-          crossorigin="anonymous"
-        ></video>
+<a-scene
 
-        <video
-          id="video1"
-          src="assets/promo1.mp4"
-          preload="auto"
-          playsinline
-          webkit-playsinline
-          crossorigin="anonymous"
-        ></video>
+    mindar-image="
+    imageTargetSrc: assets/targets.mind;
+    maxTrack:4;
+    filterMinCF:0.001;
+    filterBeta:0.01;
+    "
 
-        <video
-          id="video2"
-          src="assets/promo2.mp4"
-          preload="auto"
-          playsinline
-          webkit-playsinline
-          crossorigin="anonymous"
-        ></video>
+    color-space="sRGB"
 
-        <video
-          id="video3"
-          src="assets/promo3.mp4"
-          preload="auto"
-          playsinline
-          webkit-playsinline
-          crossorigin="anonymous"
-        ></video>
-      </a-assets>
+    renderer="
+    colorManagement:true;
+    physicallyCorrectLights:true;
+    "
 
-      <!-- =========================
-    CAMERA
-    ========================= -->
+    vr-mode-ui="
+    enabled:false;
+    "
 
-      <a-camera position="0 0 0" look-controls="enabled:false"> </a-camera>
+    device-orientation-permission-ui="
+    enabled:true;
+    "
 
-      <!-- ========================================================= -->
-      <!-- TARGET 0 -->
-      <!-- ========================================================= -->
+>
 
-      <a-entity id="target0" mindar-image-target="targetIndex:0">
-        <a-video
-          id="plane0"
-          src="#video0"
-          width="1"
-          height="0.5625"
-          position="0 0 0.01"
-          visible="false"
-          material="
-                shader:flat;
-                transparent:true;
-                opacity:1;"
-        >
-        </a-video>
-      </a-entity>
 
-      <!-- ========================================================= -->
-      <!-- TARGET 1 -->
-      <!-- ========================================================= -->
 
-      <a-entity id="target1" mindar-image-target="targetIndex:1">
-        <a-video
-          id="plane1"
-          src="#video1"
-          width="1"
-          height="0.5625"
-          position="0 0 0.01"
-          visible="false"
-          material="
-                shader:flat;
-                transparent:true;
-                opacity:1;"
-        >
-        </a-video>
-      </a-entity>
 
-      <!-- ========================================================= -->
-      <!-- TARGET 2 -->
-      <!-- ========================================================= -->
+<!-- =========================
+ASSETS
+========================= -->
 
-      <a-entity id="target2" mindar-image-target="targetIndex:2">
-        <a-video
-          id="plane2"
-          src="#video2"
-          width="1"
-          height="0.5625"
-          position="0 0 0.01"
-          visible="false"
-          material="
-                shader:flat;
-                transparent:true;
-                opacity:1;"
-        >
-        </a-video>
-      </a-entity>
 
-      <!-- ========================================================= -->
-      <!-- TARGET 3 -->
-      <!-- ========================================================= -->
+<a-assets>
 
-      <a-entity id="target3" mindar-image-target="targetIndex:3">
-        <a-video
-          id="plane3"
-          src="#video3"
-          width="1"
-          height="0.5625"
-          position="0 0 0.01"
-          visible="false"
-          material="
-                shader:flat;
-                transparent:true;
-                opacity:1;"
-        >
-        </a-video>
-      </a-entity>
-    </a-scene>
 
-    <script src="app.js"></script>
-  </body>
+    <video
+        id="video0"
+        src="assets/promo.mp4"
+        preload="auto"
+        playsinline
+        webkit-playsinline
+        crossorigin="anonymous">
+    </video>
+
+
+
+    <video
+        id="video1"
+        src="assets/promo1.mp4"
+        preload="auto"
+        playsinline
+        webkit-playsinline
+        crossorigin="anonymous">
+    </video>
+
+
+
+    <video
+        id="video2"
+        src="assets/promo2.mp4"
+        preload="auto"
+        playsinline
+        webkit-playsinline
+        crossorigin="anonymous">
+    </video>
+
+
+
+    <video
+        id="video3"
+        src="assets/promo3.mp4"
+        preload="auto"
+        playsinline
+        webkit-playsinline
+        crossorigin="anonymous">
+    </video>
+
+
+
+</a-assets>
+
+
+
+
+
+<a-camera
+    position="0 0 0"
+    look-controls="enabled:false">
+</a-camera>
+
+
+
+
+
+<!-- =========================
+TARGET 0
+========================= -->
+
+
+<a-entity
+id="target0"
+mindar-image-target="targetIndex:0">
+
+
+    <a-video
+
+        id="plane0"
+
+        src="#video0"
+
+        width="1"
+
+        height="0.5625"
+
+        position="0 0 0.01"
+
+        visible="false"
+
+        material="
+        shader:flat;
+        ">
+
+    </a-video>
+
+
+
+    <!-- CARD BACKGROUND -->
+
+    <a-plane
+
+        id="card0"
+
+        width="0.65"
+
+        height="0.22"
+
+        position="0 -0.45 0.05"
+
+        color="#ffffff"
+
+        visible="false">
+
+    </a-plane>
+
+
+
+    <!-- BUTTON TEXT -->
+
+    <a-text
+
+        id="button0"
+
+        value="▶ PLAY"
+
+        align="center"
+
+        color="#153C4B"
+
+        width="1"
+
+        position="0 -0.45 0.06"
+
+        visible="false">
+
+    </a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- =========================
+TARGET 1
+========================= -->
+
+
+<a-entity
+id="target1"
+mindar-image-target="targetIndex:1">
+
+
+    <a-video
+
+        id="plane1"
+
+        src="#video1"
+
+        width="1"
+
+        height="0.5625"
+
+        position="0 0 0.01"
+
+        visible="false">
+
+    </a-video>
+
+
+
+
+    <a-plane
+
+        id="card1"
+
+        width="0.65"
+
+        height="0.22"
+
+        position="0 -0.45 0.05"
+
+        color="#ffffff"
+
+        visible="false">
+
+    </a-plane>
+
+
+
+
+    <a-text
+
+        id="button1"
+
+        value="▶ PLAY"
+
+        align="center"
+
+        color="#153C4B"
+
+        width="1"
+
+        position="0 -0.45 0.06"
+
+        visible="false">
+
+    </a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- =========================
+TARGET 2
+========================= -->
+
+
+<a-entity
+id="target2"
+mindar-image-target="targetIndex:2">
+
+
+    <a-video
+
+        id="plane2"
+
+        src="#video2"
+
+        width="1"
+
+        height="0.5625"
+
+        position="0 0 0.01"
+
+        visible="false">
+
+    </a-video>
+
+
+
+
+    <a-plane
+
+        id="card2"
+
+        width="0.65"
+
+        height="0.22"
+
+        position="0 -0.45 0.05"
+
+        color="#ffffff"
+
+        visible="false">
+
+    </a-plane>
+
+
+
+
+    <a-text
+
+        id="button2"
+
+        value="▶ PLAY"
+
+        align="center"
+
+        color="#153C4B"
+
+        width="1"
+
+        position="0 -0.45 0.06"
+
+        visible="false">
+
+    </a-text>
+
+
+</a-entity>
+
+
+
+
+
+
+
+<!-- =========================
+TARGET 3
+========================= -->
+
+
+<a-entity
+id="target3"
+mindar-image-target="targetIndex:3">
+
+
+    <a-video
+
+        id="plane3"
+
+        src="#video3"
+
+        width="1"
+
+        height="0.5625"
+
+        position="0 0 0.01"
+
+        visible="false">
+
+    </a-video>
+
+
+
+
+    <a-plane
+
+        id="card3"
+
+        width="0.65"
+
+        height="0.22"
+
+        position="0 -0.45 0.05"
+
+        color="#ffffff"
+
+        visible="false">
+
+    </a-plane>
+
+
+
+
+    <a-text
+
+        id="button3"
+
+        value="▶ PLAY"
+
+        align="center"
+
+        color="#153C4B"
+
+        width="1"
+
+        position="0 -0.45 0.06"
+
+        visible="false">
+
+    </a-text>
+
+
+</a-entity>
+
+
+
+
+
+</a-scene>
+
+
+
+
+<script src="app.js"></script>
+
+
+</body>
+
 </html>

@@ -1,21 +1,31 @@
 * {
+
     margin:0;
+
     padding:0;
+
     box-sizing:border-box;
+
 }
+
 
 
 html,
 body {
 
     width:100%;
+
     height:100%;
 
     overflow:hidden;
 
-    font-family:"Segoe UI",Arial,sans-serif;
+    font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
 
 }
+
 
 
 /* =========================
@@ -42,13 +52,14 @@ DESKTOP WARNING
         #008C95
     );
 
+
     color:white;
 
     z-index:99999;
 
-    text-align:center;
-
     padding:20px;
+
+    text-align:center;
 
 }
 
@@ -91,11 +102,11 @@ DESKTOP WARNING
 
 #desktop-warning .small {
 
-    font-size:14px;
+    margin-top:10px;
 
     opacity:.8;
 
-    margin-top:10px;
+    font-size:14px;
 
 }
 
@@ -110,15 +121,18 @@ START SCREEN
 
 #start-screen {
 
+
     position:fixed;
 
     inset:0;
+
 
     display:flex;
 
     justify-content:center;
 
     align-items:center;
+
 
     background:
 
@@ -139,31 +153,40 @@ START SCREEN
 
     transition:.5s;
 
+
 }
 
 
 
+
 .card {
+
 
     width:360px;
 
     max-width:90%;
 
 
-    background:white;
-
     padding:35px;
 
+
+    background:white;
+
+
     border-radius:30px;
+
 
     text-align:center;
 
 
     box-shadow:
+
     0 25px 60px rgba(0,0,0,.3);
 
 
-    animation:slideUp .7s ease;
+    animation:
+    slideUp .7s ease;
+
 
 }
 
@@ -171,32 +194,39 @@ START SCREEN
 
 @keyframes slideUp {
 
-from{
+
+from {
 
     opacity:0;
 
-    transform:translateY(40px);
+    transform:
+    translateY(40px);
 
 }
 
 
-to{
+to {
 
     opacity:1;
 
-    transform:translateY(0);
+    transform:
+    translateY(0);
 
 }
 
+
 }
+
 
 
 
 .logo {
 
+
     width:90px;
 
     margin-bottom:15px;
+
 
 }
 
@@ -214,11 +244,13 @@ h1 {
 
 .subtitle {
 
+
     color:#008C95;
 
     font-weight:700;
 
     margin-top:8px;
+
 
 }
 
@@ -226,11 +258,13 @@ h1 {
 
 .description {
 
-    margin-top:20px;
 
     color:#666;
 
     line-height:1.7;
+
+    margin-top:20px;
+
 
 }
 
@@ -245,7 +279,9 @@ FEATURES
 
 .features {
 
+
     margin:30px 0;
+
 
 }
 
@@ -253,15 +289,19 @@ FEATURES
 
 .feature {
 
+
     display:flex;
 
     align-items:center;
 
     gap:15px;
 
+
     margin-bottom:20px;
 
+
     text-align:left;
+
 
 }
 
@@ -269,30 +309,34 @@ FEATURES
 
 .icon {
 
+
     width:55px;
 
     height:55px;
 
 
+    border-radius:50%;
+
+
     display:flex;
+
 
     justify-content:center;
 
     align-items:center;
 
 
-    border-radius:50%;
-
-
     font-size:25px;
 
 
     background:
+
     linear-gradient(
         135deg,
         #45C3A7,
         #008C95
     );
+
 
 }
 
@@ -308,9 +352,11 @@ FEATURES
 
 .feature span {
 
-    color:#777;
 
     font-size:14px;
+
+    color:#777;
+
 
 }
 
@@ -351,6 +397,7 @@ START BUTTON
 
 
     background:
+
     linear-gradient(
         90deg,
         #9CCB3B,
@@ -371,17 +418,24 @@ SCAN GUIDE
 
 #guide {
 
+
     position:fixed;
+
 
     inset:0;
 
+
     display:none;
+
 
     z-index:500;
 
+
     pointer-events:none;
 
+
 }
+
 
 
 
@@ -408,6 +462,7 @@ SCAN GUIDE
 
 
     border:
+
     4px solid #9CCB3B;
 
 
@@ -421,16 +476,20 @@ SCAN GUIDE
 
 
 
+
 @keyframes pulse {
 
 
-50%{
+50% {
+
 
 opacity:.5;
 
 
 transform:
+
 translate(-50%,-50%)
+
 scale(.95);
 
 
@@ -438,6 +497,7 @@ scale(.95);
 
 
 }
+
 
 
 
@@ -472,178 +532,6 @@ scale(.95);
 
 
 /* =========================
-VIDEO CONTROL CARD
-========================= */
-
-
-#controlCard {
-
-
-    position:fixed;
-
-
-    bottom:30px;
-
-
-    left:50%;
-
-
-    transform:
-    translateX(-50%);
-
-
-
-    width:330px;
-
-
-    max-width:90%;
-
-
-
-    background:white;
-
-
-
-    padding:25px;
-
-
-
-    border-radius:25px;
-
-
-
-    text-align:center;
-
-
-
-    display:none;
-
-
-
-    z-index:9999;
-
-
-
-    box-shadow:
-    0 20px 50px rgba(0,0,0,.3);
-
-
-
-}
-
-
-
-#controlCard h2 {
-
-
-    color:#153C4B;
-
-
-    margin-bottom:8px;
-
-
-}
-
-
-
-#destinationStatus {
-
-
-    color:#666;
-
-
-    margin-bottom:20px;
-
-
-}
-
-
-
-
-
-#controlCard button {
-
-
-    width:100%;
-
-
-    padding:15px;
-
-
-    margin-top:10px;
-
-
-    border:none;
-
-
-    border-radius:15px;
-
-
-    cursor:pointer;
-
-
-    font-size:16px;
-
-
-    font-weight:700;
-
-
-}
-
-
-
-
-
-#playBtn,
-#restartBtn {
-
-
-    background:
-    linear-gradient(
-        90deg,
-        #9CCB3B,
-        #7FD24B
-    );
-
-
-    color:#153C4B;
-
-
-}
-
-
-
-
-#resumeBtn {
-
-
-    background:#008C95;
-
-
-    color:white;
-
-
-}
-
-
-
-
-#closeBtn {
-
-
-    background:#ddd;
-
-
-    color:#333;
-
-
-}
-
-
-
-
-
-/* =========================
 AFRAME
 ========================= */
 
@@ -654,6 +542,37 @@ a-scene {
     width:100%;
 
     height:100%;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+MOBILE OPTIMIZATION
+========================= */
+
+
+@media(max-width:480px){
+
+
+.card {
+
+    padding:25px;
+
+}
+
+
+
+h1 {
+
+    font-size:28px;
+
+}
 
 
 }
