@@ -15,17 +15,32 @@ const guide =
 document.getElementById("guide");
 
 
+const videoPanel =
+document.getElementById("video-panel");
+
+
+
+
+
+let started = false;
+
+
+
+
+
 
 // =========================
-// DESTINATION DATA
+// TARGET DATA
 // =========================
 
 
 const destinations = [
 
-{
 
+{
 id:0,
+
+name:"Destination 1",
 
 target:
 document.getElementById("target0"),
@@ -36,31 +51,25 @@ document.getElementById("video0"),
 plane:
 document.getElementById("plane0"),
 
-card:
-document.getElementById("card0"),
+visible:false,
 
-button:
-document.getElementById("btn0"),
-
+playing:false,
 
 started:false,
 
-completed:false,
+finished:false,
 
-time:0,
-
-visible:false,
-
-position:null
-
+time:0
 
 },
 
 
 
-{
 
+{
 id:1,
+
+name:"Destination 2",
 
 target:
 document.getElementById("target1"),
@@ -71,23 +80,15 @@ document.getElementById("video1"),
 plane:
 document.getElementById("plane1"),
 
-card:
-document.getElementById("card1"),
+visible:false,
 
-button:
-document.getElementById("btn1"),
-
+playing:false,
 
 started:false,
 
-completed:false,
+finished:false,
 
-time:0,
-
-visible:false,
-
-position:null
-
+time:0
 
 },
 
@@ -95,8 +96,9 @@ position:null
 
 
 {
-
 id:2,
+
+name:"Destination 3",
 
 target:
 document.getElementById("target2"),
@@ -107,33 +109,25 @@ document.getElementById("video2"),
 plane:
 document.getElementById("plane2"),
 
-card:
-document.getElementById("card2"),
+visible:false,
 
-button:
-document.getElementById("btn2"),
-
+playing:false,
 
 started:false,
 
-completed:false,
+finished:false,
 
-time:0,
-
-visible:false,
-
-position:null
-
+time:0
 
 },
 
 
 
 
-
 {
-
 id:3,
+
+name:"Destination 4",
 
 target:
 document.getElementById("target3"),
@@ -144,25 +138,19 @@ document.getElementById("video3"),
 plane:
 document.getElementById("plane3"),
 
-card:
-document.getElementById("card3"),
+visible:false,
 
-button:
-document.getElementById("btn3"),
-
+playing:false,
 
 started:false,
 
-completed:false,
+finished:false,
 
-time:0,
-
-visible:false,
-
-position:null
-
+time:0
 
 }
+
+
 
 ];
 
@@ -170,14 +158,11 @@ position:null
 
 
 
-let started=false;
-
-
 
 
 
 // =========================
-// START AR
+// START EXPERIENCE
 // =========================
 
 
@@ -187,6 +172,7 @@ startBtn.addEventListener(
 
 
 started=true;
+
 
 
 startScreen.style.opacity="0";
@@ -216,6 +202,7 @@ guide.style.display="block";
 destinations.forEach((destination)=>{
 
 
+
     destination.target.addEventListener(
         "targetFound",
         ()=>{
@@ -225,8 +212,9 @@ destinations.forEach((destination)=>{
                 return;
 
 
+
             console.log(
-                "TARGET FOUND:",
+                "FOUND TARGET:",
                 destination.id
             );
 
@@ -236,15 +224,7 @@ destinations.forEach((destination)=>{
 
 
 
-            updateButton(destination);
-
-
-
-            showCard(destination);
-
-
-
-            startTrackingPosition(destination);
+            createCard(destination);
 
 
 
@@ -263,7 +243,7 @@ destinations.forEach((destination)=>{
 
 
             console.log(
-                "TARGET LOST:",
+                "LOST TARGET:",
                 destination.id
             );
 
@@ -273,11 +253,11 @@ destinations.forEach((destination)=>{
 
 
 
-            saveProgress(destination);
+            saveVideoTime(destination);
 
 
 
-            hideCard(destination);
+            removeCard(destination);
 
 
 
@@ -295,15 +275,111 @@ destinations.forEach((destination)=>{
 
 
 
+
 // =========================
-// SHOW CARD
+// CREATE VIDEO CARD
 // =========================
 
 
-function showCard(destination){
+function createCard(destination){
 
 
-    destination.card.style.display="block";
+
+    // prevent duplicate cards
+
+    if(
+        document.getElementById(
+            "card-"+destination.id
+        )
+    ){
+
+        return;
+
+    }
+
+
+
+
+
+
+    const card =
+    document.createElement("div");
+
+
+
+    card.className =
+    "video-card";
+
+
+
+    card.id =
+    "card-"+destination.id;
+
+
+
+
+
+
+    const title =
+    document.createElement("h3");
+
+
+
+    title.innerHTML =
+    "📍 "+destination.name;
+
+
+
+
+
+
+
+    const button =
+    document.createElement("button");
+
+
+
+    button.className =
+    "video-button";
+
+
+
+    updateButtonText(
+        button,
+        destination
+    );
+
+
+
+
+
+
+    button.onclick =
+    ()=>{
+
+
+        videoAction(
+            destination
+        );
+
+
+    };
+
+
+
+
+
+
+
+    card.appendChild(title);
+
+
+    card.appendChild(button);
+
+
+
+    videoPanel.appendChild(card);
+
 
 
 }
@@ -312,10 +388,31 @@ function showCard(destination){
 
 
 
-function hideCard(destination){
 
 
-    destination.card.style.display="none";
+
+
+// =========================
+// REMOVE CARD
+// =========================
+
+
+function removeCard(destination){
+
+
+
+    const card =
+    document.getElementById(
+        "card-"+destination.id
+    );
+
+
+
+    if(card){
+
+        card.remove();
+
+    }
 
 
 }
@@ -326,45 +423,53 @@ function hideCard(destination){
 
 
 
+
+
 // =========================
-// UPDATE BUTTON TEXT
+// BUTTON TEXT
 // =========================
 
 
-function updateButton(destination){
+function updateButtonText(
+button,
+destination
+){
 
 
 
-    if(destination.completed){
+    if(
+        destination.finished
+    ){
 
 
-        destination.button.innerHTML =
-        "↻ PLAY AGAIN";
+        button.innerHTML =
+        "↻ Restart Video";
 
 
     }
 
 
+    else if(
+        destination.started
+    ){
 
-    else if(destination.started){
 
-
-        destination.button.innerHTML =
-        "▶ RESUME<br>↺ RESTART";
+        button.innerHTML =
+        "▶ Resume Video";
 
 
     }
-
 
 
     else{
 
 
-        destination.button.innerHTML =
-        "▶ PLAY";
+        button.innerHTML =
+        "▶ Play Video";
 
 
     }
+
 
 
 }
@@ -376,103 +481,13 @@ function updateButton(destination){
 
 
 
-// =========================
-// POSITION HTML CARD
-// =========================
-
-
-function startTrackingPosition(destination){
-
-
-
-    function update(){
-
-
-
-        if(!destination.visible)
-            return;
-
-
-
-        const worldPosition =
-        new THREE.Vector3();
-
-
-
-        destination.target.object3D
-        .getWorldPosition(
-            worldPosition
-        );
-
-
-
-        const camera =
-        document.querySelector(
-            "a-camera"
-        );
-
-
-
-        const vector =
-        worldPosition.clone();
-
-
-
-        vector.project(
-            camera.components.camera.camera
-        );
-
-
-
-        const x =
-        (vector.x * .5 + .5)
-        * window.innerWidth;
-
-
-
-        const y =
-        (-vector.y * .5 + .5)
-        * window.innerHeight;
-
-
-
-
-
-        destination.card.style.left =
-        x+"px";
-
-
-
-        destination.card.style.top =
-        y+"px";
-
-
-
-        requestAnimationFrame(
-            update
-        );
-
-
-    }
-
-
-    update();
-
-}
-
-
-
-
-
-
-
 
 // =========================
-// SAVE VIDEO TIME
+// SAVE VIDEO POSITION
 // =========================
 
 
-function saveProgress(destination){
+function saveVideoTime(destination){
 
 
 
@@ -488,8 +503,56 @@ function saveProgress(destination){
         destination.video.pause();
 
 
+        destination.playing=false;
+
+
     }
 
+
+
+}
+
+// =========================
+// VIDEO ACTION
+// =========================
+
+
+async function videoAction(destination){
+
+
+
+const video =
+destination.video;
+
+
+
+const plane =
+destination.plane;
+
+
+
+
+console.log(
+"VIDEO ACTION:",
+destination.id
+);
+
+
+
+
+
+
+// FIRST PLAY
+
+if(
+!destination.started
+){
+
+
+video.currentTime = 0;
+
+
+destination.started=true;
 
 
 }
@@ -499,81 +562,20 @@ function saveProgress(destination){
 
 
 
+// RESTART AFTER FINISH
+
+else if(
+destination.finished
+){
 
 
-// =========================
-// BUTTON CLICK
-// =========================
+video.currentTime=0;
 
 
-destinations.forEach(
-(destination)=>{
+destination.finished=false;
 
 
-destination.button.addEventListener(
-"click",
-()=>{
-
-
-playVideo(destination);
-
-
-
-});
-
-
-});
-
-// =========================
-// PLAY VIDEO
-// =========================
-
-
-async function playVideo(destination){
-
-
-
-const video =
-destination.video;
-
-
-
-console.log(
-"PLAYING VIDEO:",
-destination.id
-);
-
-
-
-
-
-// show AR video
-
-destination.plane.setAttribute(
-"visible",
-true
-);
-
-
-
-// hide button
-
-hideCard(destination);
-
-
-
-
-
-
-// FIRST TIME PLAY
-
-if(!destination.started){
-
-
-    video.currentTime=0;
-
-
-    destination.started=true;
+destination.started=true;
 
 
 }
@@ -585,39 +587,57 @@ if(!destination.started){
 
 // RESUME
 
-else if(
-destination.started &&
-!destination.completed
+else{
+
+
+video.currentTime =
+destination.time;
+
+
+}
+
+
+
+
+
+
+// SHOW AR VIDEO
+
+
+plane.setAttribute(
+"visible",
+true
+);
+
+
+
+
+
+// hide other videos
+
+destinations.forEach(
+(item)=>{
+
+
+if(
+item.id !== destination.id
 ){
 
 
-    video.currentTime =
-    destination.time;
+item.video.pause();
+
+
+item.plane.setAttribute(
+"visible",
+false
+);
 
 
 }
 
 
 
-
-
-
-// REPLAY AFTER FINISH
-
-else if(destination.completed){
-
-
-    video.currentTime=0;
-
-
-    destination.completed=false;
-
-
-    destination.started=true;
-
-
-}
-
+});
 
 
 
@@ -627,32 +647,28 @@ else if(destination.completed){
 try{
 
 
-    // unlock mobile playback
-
-    video.muted=false;
+await video.play();
 
 
 
-    await video.play();
+destination.playing=true;
 
 
 
-    console.log(
-    "VIDEO STARTED"
-    );
+removeCard(destination);
+
 
 
 }
 
 
-
 catch(error){
 
 
-    console.log(
-    "VIDEO ERROR:",
-    error
-    );
+console.log(
+"PLAY ERROR:",
+error
+);
 
 
 }
@@ -670,7 +686,7 @@ catch(error){
 
 
 // =========================
-// SAVE CURRENT TIME
+// SAVE TIME WHILE PLAYING
 // =========================
 
 
@@ -690,7 +706,6 @@ if(
 
 destination.time =
 destination.video.currentTime;
-
 
 
 }
@@ -725,18 +740,19 @@ destination.video.addEventListener(
 
 
 console.log(
-"VIDEO FINISHED:",
+"FINISHED:",
 destination.id
 );
 
 
 
+destination.finished=true;
 
-destination.completed=true;
+
+destination.playing=false;
 
 
 destination.time=0;
-
 
 
 
@@ -749,13 +765,12 @@ false
 
 
 
-if(destination.visible){
+if(
+destination.visible
+){
 
 
-updateButton(destination);
-
-
-showCard(destination);
+createCard(destination);
 
 
 }
@@ -763,6 +778,53 @@ showCard(destination);
 
 
 });
+
+
+});
+
+
+
+
+
+
+
+
+// =========================
+// CAMERA LOST WHILE PLAYING
+// =========================
+
+
+destinations.forEach(
+(destination)=>{
+
+
+destination.target.addEventListener(
+"targetLost",
+()=>{
+
+
+if(
+destination.playing
+){
+
+
+destination.time =
+destination.video.currentTime;
+
+
+destination.video.pause();
+
+
+destination.playing=false;
+
+
+
+}
+
+
+
+});
+
 
 
 });

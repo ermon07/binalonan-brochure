@@ -23,41 +23,8 @@
 </head>
 
 
+
 <body>
-
-
-
-<!-- =========================
-DESKTOP WARNING
-========================= -->
-
-
-<div id="desktop-warning">
-
-<div class="box">
-
-<h2>
-📱 Mobile Only Experience
-</h2>
-
-
-<p>
-Please open this AR experience using a smartphone.
-</p>
-
-
-<p class="small">
-Camera AR is not supported on desktop.
-</p>
-
-
-</div>
-
-</div>
-
-
-
-
 
 
 <!-- =========================
@@ -71,10 +38,7 @@ START SCREEN
 <div class="card">
 
 
-<img 
-src="assets/logo.png"
-class="logo">
-
+<img src="assets/logo.png" class="logo">
 
 
 <h1>
@@ -91,107 +55,10 @@ Discover. Experience. Remember.
 
 <p class="description">
 
-Bring the tourism brochure to life.
-Scan the images and experience Binalonan
-through AR.
+Scan the brochure and discover
+Binalonan through augmented reality.
 
 </p>
-
-
-
-
-
-<div class="features">
-
-
-<div class="feature">
-
-
-<div class="icon">
-📷
-</div>
-
-
-<div>
-
-<h3>
-Scan
-</h3>
-
-
-<span>
-Point your camera
-</span>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="feature">
-
-
-<div class="icon">
-🎬
-</div>
-
-
-<div>
-
-<h3>
-Watch
-</h3>
-
-
-<span>
-Experience the story
-</span>
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-<div class="feature">
-
-
-<div class="icon">
-📍
-</div>
-
-
-<div>
-
-<h3>
-Explore
-</h3>
-
-
-<span>
-Discover destinations
-</span>
-
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
 
 
 
@@ -208,7 +75,6 @@ Discover destinations
 
 
 </div>
-
 
 
 
@@ -236,64 +102,17 @@ Point camera at the brochure
 
 
 
+
+
 <!-- =========================
-HTML AR BUTTON CONTAINER
+VIDEO CONTROL PANEL
 ========================= -->
 
 
-<div id="ar-ui">
+<div id="video-panel">
 
 
 </div>
-
-<!-- =========================
-TARGET CONTROL CARDS
-========================= -->
-
-
-<div class="target-card" id="card0">
-
-    <button class="play-button" id="btn0">
-        ▶ PLAY
-    </button>
-
-</div>
-
-
-
-<div class="target-card" id="card1">
-
-    <button class="play-button" id="btn1">
-        ▶ PLAY
-    </button>
-
-</div>
-
-
-
-<div class="target-card" id="card2">
-
-    <button class="play-button" id="btn2">
-        ▶ PLAY
-    </button>
-
-</div>
-
-
-
-<div class="target-card" id="card3">
-
-    <button class="play-button" id="btn3">
-        ▶ PLAY
-    </button>
-
-</div>
-
-
-
-
-
-
 
 <!-- =========================
 AR SCENE
@@ -302,29 +121,30 @@ AR SCENE
 
 <a-scene
 
-    mindar-image="
-    imageTargetSrc: assets/targets.mind;
-    maxTrack:4;
-    filterMinCF:0.001;
-    filterBeta:0.01;
-    "
-
-    color-space="sRGB"
+mindar-image="
+imageTargetSrc: assets/targets.mind;
+maxTrack:4;
+filterMinCF:0.001;
+filterBeta:0.01;
+"
 
 
-    renderer="
-    colorManagement:true;
-    "
+color-space="sRGB"
 
 
-    vr-mode-ui="
-    enabled:false;
-    "
+renderer="
+colorManagement:true;
+"
 
 
-    device-orientation-permission-ui="
-    enabled:true;
-    ">
+vr-mode-ui="
+enabled:false;
+"
+
+
+device-orientation-permission-ui="
+enabled:true;
+">
 
 
 
@@ -334,6 +154,8 @@ AR SCENE
 <a-assets>
 
 
+
+<!-- VIDEO 0 -->
 
 <video
 
@@ -347,14 +169,14 @@ playsinline
 
 webkit-playsinline
 
-muted
-
 crossorigin="anonymous">
 
 </video>
 
 
 
+
+<!-- VIDEO 1 -->
 
 <video
 
@@ -368,14 +190,15 @@ playsinline
 
 webkit-playsinline
 
-muted
-
 crossorigin="anonymous">
 
 </video>
 
 
 
+
+
+<!-- VIDEO 2 -->
 
 <video
 
@@ -389,14 +212,15 @@ playsinline
 
 webkit-playsinline
 
-muted
-
 crossorigin="anonymous">
 
 </video>
 
 
 
+
+
+<!-- VIDEO 3 -->
 
 <video
 
@@ -410,8 +234,6 @@ playsinline
 
 webkit-playsinline
 
-muted
-
 crossorigin="anonymous">
 
 </video>
@@ -419,7 +241,6 @@ crossorigin="anonymous">
 
 
 </a-assets>
-
 
 
 
@@ -450,10 +271,7 @@ TARGET 0
 
 id="target0"
 
-mindar-image-target="
-targetIndex:0">
-
-
+mindar-image-target="targetIndex:0">
 
 
 <a-video
@@ -477,8 +295,8 @@ shader:flat;
 </a-video>
 
 
-
 </a-entity>
+
 
 
 
@@ -495,9 +313,7 @@ TARGET 1
 
 id="target1"
 
-mindar-image-target="
-targetIndex:1">
-
+mindar-image-target="targetIndex:1">
 
 
 <a-video
@@ -539,9 +355,7 @@ TARGET 2
 
 id="target2"
 
-mindar-image-target="
-targetIndex:2">
-
+mindar-image-target="targetIndex:2">
 
 
 <a-video
@@ -583,9 +397,7 @@ TARGET 3
 
 id="target3"
 
-mindar-image-target="
-targetIndex:3">
-
+mindar-image-target="targetIndex:3">
 
 
 <a-video
@@ -616,9 +428,7 @@ shader:flat;
 
 
 
-
 </a-scene>
-
 
 
 
