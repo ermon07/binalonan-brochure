@@ -571,145 +571,37 @@ position:fixed;
 
 inset:0;
 
+z-index:99999;
+
 pointer-events:none;
 
-z-index:8000;
-
 }
-
-
 
 
 
 .target-card{
 
-
 position:absolute;
-
 
 display:none;
 
-
-transform:
-
-translate(-50%,-50%);
-
-
-
-animation:
-
-pop .25s ease;
-
-
+transform:translate(-50%,-50%);
 
 pointer-events:auto;
 
+z-index:100000;
 
 }
-
-
-
-
-
-
-@keyframes pop{
-
-
-from{
-
-opacity:0;
-
-transform:
-
-translate(-50%,-50%)
-
-scale(.7);
-
-
-}
-
-
-to{
-
-
-opacity:1;
-
-
-transform:
-
-translate(-50%,-50%)
-
-scale(1);
-
-
-}
-
-
-}
-
-
 
 
 
 .play-button{
 
+pointer-events:auto;
 
-background:
+touch-action:manipulation;
 
-linear-gradient(
-90deg,
-#9CCB3B,
-#7FD24B
-);
-
-
-border:none;
-
-
-padding:
-
-14px 28px;
-
-
-
-border-radius:40px;
-
-
-font-size:18px;
-
-
-font-weight:700;
-
-
-color:#153C4B;
-
-
-cursor:pointer;
-
-
-
-box-shadow:
-
-0 10px 25px rgba(0,0,0,.3);
-
-
-
-min-width:130px;
-
-
-
-}
-
-
-
-
-.play-button:active{
-
-
-transform:
-
-scale(.95);
-
+-webkit-tap-highlight-color:transparent;
 
 }
 
@@ -723,15 +615,13 @@ scale(.95);
 AFRAME
 ========================= */
 
-
 a-scene{
 
+position:fixed;
 
-width:100%;
+inset:0;
 
-
-height:100%;
-
+z-index:1;
 
 }
 
