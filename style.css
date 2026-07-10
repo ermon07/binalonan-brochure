@@ -1,30 +1,36 @@
-* {
+/* =========================
+GLOBAL
+========================= */
 
-    margin:0;
 
-    padding:0;
+*{
 
-    box-sizing:border-box;
+margin:0;
+
+padding:0;
+
+box-sizing:border-box;
 
 }
-
 
 
 html,
-body {
+body{
 
-    width:100%;
+width:100%;
 
-    height:100%;
+height:100%;
 
-    overflow:hidden;
+overflow:hidden;
 
-    font-family:
-    "Segoe UI",
-    Arial,
-    sans-serif;
+font-family:
+"Segoe UI",
+Arial,
+sans-serif;
 
 }
+
+
 
 
 
@@ -33,80 +39,88 @@ DESKTOP WARNING
 ========================= */
 
 
-#desktop-warning {
+#desktop-warning{
 
-    position:fixed;
+position:fixed;
 
-    inset:0;
+inset:0;
 
-    display:none;
+display:none;
 
-    justify-content:center;
+justify-content:center;
 
-    align-items:center;
+align-items:center;
 
-    background:
-    linear-gradient(
-        180deg,
-        #153C4B,
-        #008C95
-    );
+background:
 
-
-    color:white;
-
-    z-index:99999;
-
-    padding:20px;
-
-    text-align:center;
-
-}
+linear-gradient(
+180deg,
+#153C4B,
+#008C95
+);
 
 
+color:white;
 
-#desktop-warning .box {
+z-index:99999;
 
-    background:
-    rgba(255,255,255,.12);
+text-align:center;
 
-    padding:30px;
-
-    border-radius:25px;
-
-    backdrop-filter:blur(10px);
-
-    max-width:350px;
+padding:20px;
 
 }
 
 
 
-#desktop-warning h2 {
+#desktop-warning .box{
 
-    color:#9CCB3B;
 
-    margin-bottom:15px;
+background:
+rgba(255,255,255,.15);
+
+
+padding:30px;
+
+
+border-radius:25px;
+
+
+backdrop-filter:
+blur(10px);
+
+
+max-width:350px;
+
 
 }
 
 
 
-#desktop-warning p {
+#desktop-warning h2{
 
-    line-height:1.6;
+color:#9CCB3B;
+
+margin-bottom:15px;
 
 }
 
 
 
-#desktop-warning .small {
+#desktop-warning p{
 
-    margin-top:10px;
+line-height:1.6;
 
-    opacity:.8;
+}
 
-    font-size:14px;
+
+
+.small{
+
+font-size:14px;
+
+opacity:.8;
+
+margin-top:10px;
 
 }
 
@@ -119,100 +133,44 @@ START SCREEN
 ========================= */
 
 
-#start-screen {
+#start-screen{
 
 
-    position:fixed;
+position:fixed;
 
-    inset:0;
-
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
+inset:0;
 
 
-    background:
+display:flex;
 
-    radial-gradient(
-        circle at top,
-        #45C3A7,
-        transparent 40%
-    ),
+justify-content:center;
 
-    linear-gradient(
-        180deg,
-        #153C4B,
-        #008C95
-    );
-
-
-    z-index:9000;
-
-    transition:.5s;
-
-
-}
+align-items:center;
 
 
 
-
-.card {
-
-
-    width:360px;
-
-    max-width:90%;
+background:
 
 
-    padding:35px;
+radial-gradient(
+circle at top,
+#45C3A7,
+transparent 40%
+),
 
 
-    background:white;
-
-
-    border-radius:30px;
-
-
-    text-align:center;
-
-
-    box-shadow:
-
-    0 25px 60px rgba(0,0,0,.3);
-
-
-    animation:
-    slideUp .7s ease;
-
-
-}
+linear-gradient(
+180deg,
+#153C4B,
+#008C95
+);
 
 
 
-@keyframes slideUp {
+z-index:9000;
 
 
-from {
-
-    opacity:0;
-
-    transform:
-    translateY(40px);
-
-}
-
-
-to {
-
-    opacity:1;
-
-    transform:
-    translateY(0);
-
-}
+transition:.5s;
 
 
 }
@@ -220,53 +178,115 @@ to {
 
 
 
-.logo {
 
 
-    width:90px;
+.card{
 
-    margin-bottom:15px;
+
+width:360px;
+
+max-width:90%;
+
+
+background:white;
+
+
+padding:35px;
+
+
+border-radius:30px;
+
+
+text-align:center;
+
+
+box-shadow:
+
+0 25px 60px rgba(0,0,0,.3);
+
+
+
+animation:
+
+slideUp .7s ease;
+
+
+}
+
+
+
+
+
+@keyframes slideUp{
+
+
+from{
+
+opacity:0;
+
+transform:
+translateY(40px);
+
+}
+
+
+to{
+
+opacity:1;
+
+transform:
+translateY(0);
+
+}
 
 
 }
 
 
 
-h1 {
 
-    color:#153C4B;
+.logo{
 
-    font-size:34px;
+width:90px;
 
-}
-
-
-
-.subtitle {
-
-
-    color:#008C95;
-
-    font-weight:700;
-
-    margin-top:8px;
-
+margin-bottom:15px;
 
 }
 
 
 
-.description {
+h1{
 
+color:#153C4B;
 
-    color:#666;
-
-    line-height:1.7;
-
-    margin-top:20px;
-
+font-size:34px;
 
 }
+
+
+
+.subtitle{
+
+color:#008C95;
+
+font-weight:700;
+
+margin-top:8px;
+
+}
+
+
+
+.description{
+
+color:#666;
+
+line-height:1.7;
+
+margin-top:20px;
+
+}
+
 
 
 
@@ -277,88 +297,86 @@ FEATURES
 ========================= */
 
 
-.features {
+.features{
+
+margin:30px 0;
+
+}
 
 
-    margin:30px 0;
+
+.feature{
+
+
+display:flex;
+
+align-items:center;
+
+
+gap:15px;
+
+
+margin-bottom:20px;
+
+
+text-align:left;
 
 
 }
 
 
 
-.feature {
+.icon{
 
 
-    display:flex;
+width:55px;
 
-    align-items:center;
-
-    gap:15px;
+height:55px;
 
 
-    margin-bottom:20px;
+border-radius:50%;
 
 
-    text-align:left;
+display:flex;
+
+align-items:center;
+
+justify-content:center;
 
 
-}
+font-size:25px;
 
 
+background:
 
-.icon {
-
-
-    width:55px;
-
-    height:55px;
-
-
-    border-radius:50%;
-
-
-    display:flex;
-
-
-    justify-content:center;
-
-    align-items:center;
-
-
-    font-size:25px;
-
-
-    background:
-
-    linear-gradient(
-        135deg,
-        #45C3A7,
-        #008C95
-    );
+linear-gradient(
+135deg,
+#45C3A7,
+#008C95
+);
 
 
 }
 
 
 
-.feature h3 {
 
-    color:#153C4B;
+.feature h3{
+
+color:#153C4B;
+
+}
+
+
+
+.feature span{
+
+font-size:14px;
+
+color:#777;
 
 }
 
-
-
-.feature span {
-
-
-    font-size:14px;
-
-    color:#777;
-
-
-}
 
 
 
@@ -369,43 +387,47 @@ START BUTTON
 ========================= */
 
 
-#start-btn {
+#start-btn{
 
 
-    width:100%;
+width:100%;
 
 
-    padding:17px;
+padding:17px;
 
 
-    border:none;
+border:none;
 
 
-    border-radius:15px;
+border-radius:15px;
 
 
-    cursor:pointer;
+cursor:pointer;
 
 
-    font-size:18px;
+font-size:18px;
 
 
-    font-weight:700;
+font-weight:700;
 
 
-    color:#153C4B;
+
+background:
+
+linear-gradient(
+90deg,
+#9CCB3B,
+#7FD24B
+);
 
 
-    background:
 
-    linear-gradient(
-        90deg,
-        #9CCB3B,
-        #7FD24B
-    );
+color:#153C4B;
 
 
 }
+
+
 
 
 
@@ -416,22 +438,67 @@ SCAN GUIDE
 ========================= */
 
 
-#guide {
+#guide{
 
 
-    position:fixed;
+position:fixed;
 
 
-    inset:0;
+inset:0;
 
 
-    display:none;
+display:none;
 
 
-    z-index:500;
+z-index:500;
 
 
-    pointer-events:none;
+pointer-events:none;
+
+
+}
+
+
+
+.scan-box{
+
+
+position:absolute;
+
+
+width:260px;
+
+
+height:260px;
+
+
+top:50%;
+
+
+left:50%;
+
+
+
+transform:
+
+translate(-50%,-50%);
+
+
+
+border:
+
+4px solid #9CCB3B;
+
+
+
+border-radius:20px;
+
+
+
+animation:
+
+pulse 1.5s infinite;
+
 
 
 }
@@ -439,49 +506,10 @@ SCAN GUIDE
 
 
 
-.scan-box {
+@keyframes pulse{
 
 
-    position:absolute;
-
-
-    width:260px;
-
-
-    height:260px;
-
-
-    top:50%;
-
-
-    left:50%;
-
-
-    transform:
-    translate(-50%,-50%);
-
-
-    border:
-
-    4px solid #9CCB3B;
-
-
-    border-radius:20px;
-
-
-    animation:pulse 1.5s infinite;
-
-
-}
-
-
-
-
-@keyframes pulse {
-
-
-50% {
-
+50%{
 
 opacity:.5;
 
@@ -500,32 +528,192 @@ scale(.95);
 
 
 
-
-#guide p {
-
-
-    position:absolute;
+#guide p{
 
 
-    bottom:60px;
+position:absolute;
 
 
-    width:100%;
+bottom:60px;
 
 
-    text-align:center;
+width:100%;
 
 
-    color:white;
+text-align:center;
 
 
-    font-size:18px;
+color:white;
 
 
-    font-weight:600;
+font-weight:600;
+
+
+font-size:18px;
 
 
 }
+
+
+
+
+
+
+
+/* =========================
+AR TARGET CARDS
+========================= */
+
+
+#ar-ui{
+
+position:fixed;
+
+inset:0;
+
+pointer-events:none;
+
+z-index:8000;
+
+}
+
+
+
+
+
+.target-card{
+
+
+position:absolute;
+
+
+display:none;
+
+
+transform:
+
+translate(-50%,-50%);
+
+
+
+animation:
+
+pop .25s ease;
+
+
+
+pointer-events:auto;
+
+
+}
+
+
+
+
+
+
+@keyframes pop{
+
+
+from{
+
+opacity:0;
+
+transform:
+
+translate(-50%,-50%)
+
+scale(.7);
+
+
+}
+
+
+to{
+
+
+opacity:1;
+
+
+transform:
+
+translate(-50%,-50%)
+
+scale(1);
+
+
+}
+
+
+}
+
+
+
+
+
+.play-button{
+
+
+background:
+
+linear-gradient(
+90deg,
+#9CCB3B,
+#7FD24B
+);
+
+
+border:none;
+
+
+padding:
+
+14px 28px;
+
+
+
+border-radius:40px;
+
+
+font-size:18px;
+
+
+font-weight:700;
+
+
+color:#153C4B;
+
+
+cursor:pointer;
+
+
+
+box-shadow:
+
+0 10px 25px rgba(0,0,0,.3);
+
+
+
+min-width:130px;
+
+
+
+}
+
+
+
+
+.play-button:active{
+
+
+transform:
+
+scale(.95);
+
+
+}
+
+
 
 
 
@@ -536,43 +724,55 @@ AFRAME
 ========================= */
 
 
-a-scene {
+a-scene{
 
 
-    width:100%;
+width:100%;
 
-    height:100%;
+
+height:100%;
 
 
 }
-
-
 
 
 
 
 
 /* =========================
-MOBILE OPTIMIZATION
+MOBILE
 ========================= */
 
 
 @media(max-width:480px){
 
 
-.card {
+.card{
 
-    padding:25px;
+padding:25px;
+
+}
+
+
+
+h1{
+
+font-size:28px;
 
 }
 
 
 
-h1 {
+.play-button{
 
-    font-size:28px;
+font-size:16px;
+
+padding:
+
+12px 22px;
 
 }
+
 
 
 }

@@ -1,6 +1,6 @@
-// =====================================================
+// =========================
 // ELEMENTS
-// =====================================================
+// =========================
 
 
 const startScreen =
@@ -16,10 +16,9 @@ document.getElementById("guide");
 
 
 
-
-// =====================================================
+// =========================
 // DESTINATION DATA
-// =====================================================
+// =========================
 
 
 const destinations = [
@@ -41,7 +40,7 @@ card:
 document.getElementById("card0"),
 
 button:
-document.getElementById("button0"),
+document.getElementById("btn0"),
 
 
 started:false,
@@ -50,8 +49,9 @@ completed:false,
 
 time:0,
 
+visible:false,
 
-visible:false
+position:null
 
 
 },
@@ -75,7 +75,7 @@ card:
 document.getElementById("card1"),
 
 button:
-document.getElementById("button1"),
+document.getElementById("btn1"),
 
 
 started:false,
@@ -84,11 +84,13 @@ completed:false,
 
 time:0,
 
+visible:false,
 
-visible:false
+position:null
 
 
 },
+
 
 
 
@@ -109,7 +111,7 @@ card:
 document.getElementById("card2"),
 
 button:
-document.getElementById("button2"),
+document.getElementById("btn2"),
 
 
 started:false,
@@ -118,11 +120,14 @@ completed:false,
 
 time:0,
 
+visible:false,
 
-visible:false
+position:null
 
 
 },
+
+
 
 
 
@@ -143,7 +148,7 @@ card:
 document.getElementById("card3"),
 
 button:
-document.getElementById("button3"),
+document.getElementById("btn3"),
 
 
 started:false,
@@ -152,8 +157,9 @@ completed:false,
 
 time:0,
 
+visible:false,
 
-visible:false
+position:null
 
 
 }
@@ -164,147 +170,15 @@ visible:false
 
 
 
-// =====================================================
-// VARIABLES
-// =====================================================
-
-
 let started=false;
 
 
 
-let currentPlaying=null;
 
 
-
-
-
-// =====================================================
-// SHOW / HIDE CARD
-// =====================================================
-
-
-function showCard(destination){
-
-
-
-destination.card.setAttribute(
-"visible",
-true
-);
-
-
-
-destination.button.setAttribute(
-"visible",
-true
-);
-
-
-
-
-
-if(destination.completed){
-
-
-destination.button.setAttribute(
-"value",
-"▶ PLAY AGAIN"
-);
-
-
-}
-
-
-
-else if(destination.started){
-
-
-destination.button.setAttribute(
-"value",
-"▶ RESUME\n\n↺ RESTART"
-);
-
-
-}
-
-
-
-else{
-
-
-destination.button.setAttribute(
-"value",
-"▶ PLAY"
-);
-
-
-}
-
-
-
-}
-
-
-
-
-
-function hideCard(destination){
-
-
-destination.card.setAttribute(
-"visible",
-false
-);
-
-
-
-destination.button.setAttribute(
-"visible",
-false
-);
-
-
-
-}
-
-
-
-
-
-function showVideo(destination){
-
-
-destination.plane.setAttribute(
-"visible",
-true
-);
-
-
-}
-
-
-
-
-
-function hideVideo(destination){
-
-
-destination.plane.setAttribute(
-"visible",
-false
-);
-
-
-}
-
-
-
-
-
-// =====================================================
-// START EXPERIENCE
-// =====================================================
+// =========================
+// START AR
+// =========================
 
 
 startBtn.addEventListener(
@@ -313,7 +187,6 @@ startBtn.addEventListener(
 
 
 started=true;
-
 
 
 startScreen.style.opacity="0";
@@ -335,9 +208,9 @@ guide.style.display="block";
 
 });
 
-// =====================================================
+// =========================
 // TARGET FOUND / LOST
-// =====================================================
+// =========================
 
 
 destinations.forEach((destination)=>{
@@ -352,9 +225,8 @@ destinations.forEach((destination)=>{
                 return;
 
 
-
             console.log(
-                "FOUND TARGET:",
+                "TARGET FOUND:",
                 destination.id
             );
 
@@ -364,12 +236,22 @@ destinations.forEach((destination)=>{
 
 
 
+            updateButton(destination);
+
+
+
             showCard(destination);
+
+
+
+            startTrackingPosition(destination);
 
 
 
         }
     );
+
+
 
 
 
@@ -381,7 +263,7 @@ destinations.forEach((destination)=>{
 
 
             console.log(
-                "LOST TARGET:",
+                "TARGET LOST:",
                 destination.id
             );
 
@@ -391,23 +273,7 @@ destinations.forEach((destination)=>{
 
 
 
-            // Save current progress
-
-            if(
-                destination.video
-                &&
-                !destination.video.paused
-            ){
-
-                destination.time =
-                destination.video.currentTime;
-
-
-
-                destination.video.pause();
-
-
-            }
+            saveProgress(destination);
 
 
 
@@ -426,40 +292,33 @@ destinations.forEach((destination)=>{
 
 
 
-// =====================================================
-// BUTTON CLICK HANDLER
-// =====================================================
-
-
-destinations.forEach((destination)=>{
-
-
-    destination.button.addEventListener(
-        "click",
-        ()=>{
-
-
-            if(!started)
-                return;
 
 
 
-            console.log(
-                "CLICK:",
-                destination.id
-            );
+// =========================
+// SHOW CARD
+// =========================
+
+
+function showCard(destination){
+
+
+    destination.card.style.display="block";
+
+
+}
 
 
 
-            playDestination(destination);
 
 
-
-        }
-    );
+function hideCard(destination){
 
 
-});
+    destination.card.style.display="none";
+
+
+}
 
 
 
@@ -467,117 +326,166 @@ destinations.forEach((destination)=>{
 
 
 
-// =====================================================
-// PLAY / RESUME / RESTART
-// =====================================================
+// =========================
+// UPDATE BUTTON TEXT
+// =========================
 
 
-async function playDestination(destination){
-
-
-
-    const video =
-    destination.video;
-
-
-
-    // Stop nothing else
-    // Multiple videos can exist
-
-
-    showVideo(destination);
-
-
-
-    hideCard(destination);
-
-
+function updateButton(destination){
 
 
 
     if(destination.completed){
 
 
-        console.log(
-            "Restarting completed video"
-        );
-
-
-        video.currentTime=0;
-
-
-        destination.time=0;
-
-
-        destination.completed=false;
+        destination.button.innerHTML =
+        "↻ PLAY AGAIN";
 
 
     }
-
-
 
 
 
     else if(destination.started){
 
 
-        console.log(
-            "Resuming video"
-        );
-
-
-        video.currentTime =
-        destination.time;
+        destination.button.innerHTML =
+        "▶ RESUME<br>↺ RESTART";
 
 
     }
-
-
 
 
 
     else{
 
 
-        console.log(
-            "First play"
-        );
-
-
-        video.currentTime=0;
-
-
-        destination.started=true;
+        destination.button.innerHTML =
+        "▶ PLAY";
 
 
     }
 
 
+}
 
 
 
-    try{
-
-
-        await video.play();
 
 
 
-        currentPlaying =
-        destination;
 
+
+// =========================
+// POSITION HTML CARD
+// =========================
+
+
+function startTrackingPosition(destination){
+
+
+
+    function update(){
+
+
+
+        if(!destination.visible)
+            return;
+
+
+
+        const worldPosition =
+        new THREE.Vector3();
+
+
+
+        destination.target.object3D
+        .getWorldPosition(
+            worldPosition
+        );
+
+
+
+        const camera =
+        document.querySelector(
+            "a-camera"
+        );
+
+
+
+        const vector =
+        worldPosition.clone();
+
+
+
+        vector.project(
+            camera.components.camera.camera
+        );
+
+
+
+        const x =
+        (vector.x * .5 + .5)
+        * window.innerWidth;
+
+
+
+        const y =
+        (-vector.y * .5 + .5)
+        * window.innerHeight;
+
+
+
+
+
+        destination.card.style.left =
+        x+"px";
+
+
+
+        destination.card.style.top =
+        y+"px";
+
+
+
+        requestAnimationFrame(
+            update
+        );
 
 
     }
 
 
-    catch(error){
+    update();
+
+}
 
 
-        console.log(
-            "VIDEO ERROR",
-            error
-        );
+
+
+
+
+
+
+// =========================
+// SAVE VIDEO TIME
+// =========================
+
+
+function saveProgress(destination){
+
+
+
+    if(
+        !destination.video.paused
+    ){
+
+
+        destination.time =
+        destination.video.currentTime;
+
+
+        destination.video.pause();
 
 
     }
@@ -592,34 +500,204 @@ async function playDestination(destination){
 
 
 
-// =====================================================
-// VIDEO UPDATE SAVE TIME
-// =====================================================
+
+// =========================
+// BUTTON CLICK
+// =========================
 
 
-destinations.forEach((destination)=>{
+destinations.forEach(
+(destination)=>{
 
 
-    destination.video.addEventListener(
-        "timeupdate",
-        ()=>{
+destination.button.addEventListener(
+"click",
+()=>{
 
 
-            if(
-                !destination.video.paused
-            ){
+playVideo(destination);
 
 
-                destination.time =
-                destination.video.currentTime;
+
+});
 
 
-            }
+});
+
+// =========================
+// PLAY VIDEO
+// =========================
 
 
-        }
+async function playVideo(destination){
+
+
+
+const video =
+destination.video;
+
+
+
+console.log(
+"PLAYING VIDEO:",
+destination.id
+);
+
+
+
+
+
+// show AR video
+
+destination.plane.setAttribute(
+"visible",
+true
+);
+
+
+
+// hide button
+
+hideCard(destination);
+
+
+
+
+
+
+// FIRST TIME PLAY
+
+if(!destination.started){
+
+
+    video.currentTime=0;
+
+
+    destination.started=true;
+
+
+}
+
+
+
+
+
+
+// RESUME
+
+else if(
+destination.started &&
+!destination.completed
+){
+
+
+    video.currentTime =
+    destination.time;
+
+
+}
+
+
+
+
+
+
+// REPLAY AFTER FINISH
+
+else if(destination.completed){
+
+
+    video.currentTime=0;
+
+
+    destination.completed=false;
+
+
+    destination.started=true;
+
+
+}
+
+
+
+
+
+
+
+try{
+
+
+    // unlock mobile playback
+
+    video.muted=false;
+
+
+
+    await video.play();
+
+
+
+    console.log(
+    "VIDEO STARTED"
     );
 
+
+}
+
+
+
+catch(error){
+
+
+    console.log(
+    "VIDEO ERROR:",
+    error
+    );
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =========================
+// SAVE CURRENT TIME
+// =========================
+
+
+destinations.forEach(
+(destination)=>{
+
+
+destination.video.addEventListener(
+"timeupdate",
+()=>{
+
+
+if(
+!destination.video.paused
+){
+
+
+destination.time =
+destination.video.currentTime;
+
+
+
+}
+
+
+
+});
 
 
 });
@@ -630,54 +708,61 @@ destinations.forEach((destination)=>{
 
 
 
-// =====================================================
+
+
+// =========================
 // VIDEO FINISHED
-// =====================================================
+// =========================
 
 
-destinations.forEach((destination)=>{
+destinations.forEach(
+(destination)=>{
 
 
-    destination.video.addEventListener(
-        "ended",
-        ()=>{
+destination.video.addEventListener(
+"ended",
+()=>{
 
 
-            console.log(
-                "FINISHED:",
-                destination.id
-            );
-
-
-
-            destination.completed=true;
-
-
-            destination.started=true;
-
-
-            destination.time=0;
+console.log(
+"VIDEO FINISHED:",
+destination.id
+);
 
 
 
-            hideVideo(destination);
+
+destination.completed=true;
+
+
+destination.time=0;
 
 
 
-            if(destination.visible){
+
+destination.plane.setAttribute(
+"visible",
+false
+);
 
 
-                showCard(destination);
-
-
-            }
 
 
 
-        }
-    );
+if(destination.visible){
+
+
+updateButton(destination);
+
+
+showCard(destination);
+
+
+}
 
 
 
 });
 
+
+});
